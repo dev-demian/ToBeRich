@@ -25,7 +25,7 @@ class Board_Edit extends JFrame{
    JLabel lblNewLabel = new JLabel("제목");
    JLabel lblNewLabel_1 = new JLabel("비번");
    JLabel label_1 = new JLabel("내용");
-
+//...
    //main에 하던 설정들을 생성자에서 진행
    public Board_Edit() {
       this.display();//화면 구성 관련 처리
