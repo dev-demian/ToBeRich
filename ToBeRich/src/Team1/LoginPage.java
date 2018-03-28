@@ -3,6 +3,8 @@ package Team1;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,6 +16,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+
 
 class LogIn extends JFrame{
    
@@ -30,7 +34,8 @@ class LogIn extends JFrame{
    //로그인 , 회원 가입 버튼
    private JButton Login_button = new JButton("LOGIN");
    private JButton join_button = new JButton("회원가입");
-
+   private String id_regex ="^[A-Za-z]{1}[A-Za-z0-9]{3,19}$"; //시작은 영문으로만, '_'를 제외한 특수문자 안되며 영문, 숫자, '_'으로만 이루어진 3 ~ 19자 이하
+   private String pwd_regex ="[a-z0-9]{6,15}";
    //private JButton find_button = new JButton("아이디 / 비밀번호 찾기");
    
    
@@ -86,30 +91,47 @@ class LogIn extends JFrame{
          join_button.setBounds(125, 296, 103, 23);;
          mainPanel.add(join_button);
          
-
-      
-      
-   }
-
+         	
+         	
+         	
+   }		
+   			
    private void event() {
       this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//창 종료
-      Login_button.addActionListener(e->{
-    	 if(id_textFiled.getText().equals("master")) {
-    		 
+     Login_button.addActionListener(e->{
+    	 
+    	Pattern id_pattern = Pattern.compile(id_regex);  //아이디 조건 정규식
+    	Matcher id_match = id_pattern.matcher(id_textFiled.getText());
+    	
+    	Pattern pwd_pattern = Pattern.compile(pwd_regex); // 비밀번호 조건 정규식
+    	char[] temp_pwd = pw_Filed.getPassword();
+    	String change="";
+    	for(int i=0; i<pw_Filed.getPassword().length;i++) {
+    		change += Character.toString(temp_pwd[i]);
+    	}
+    	
+ //   	System.out.println(change);
+    		
+     	Matcher pwd_match = pwd_pattern.matcher(change);
+     	
+//    	System.out.println(id_match.matches());
+//    	System.out.println(pwd_match.matches());
+    	
+    	if(id_match.matches()&&pwd_match.matches()) {
     	  Main_Form callmain = new Main_Form();
     	  dispose();
-    	 }
-      });
+    	}
+    	 
+    	
+    		
+      });	
       join_button.addActionListener(e->{
          JoinPage join = new JoinPage();
-      });
+      });	
       
       
 	
-	
-     
-      
-    	  
+ 
     	  
       
       

@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -77,48 +80,50 @@ public class JoinPage extends JFrame {
    }
 
    private void event() {
-//      btnNewButton_2.addActionListener(e->{                              // Áßº¹È®ÀÎ ¹öÆ°. 
-//         Pattern pattern = Pattern.compile("^[A-Za-z]{1}[A-Za-z0-9]{3,19}$");   //¾ÆÀÌµð Á¶°Ç 
-//         Matcher match = pattern.matcher(ID.getText());   
+	   overlap_id.addActionListener(e->{                              // Áßº¹È®ÀÎ ¹öÆ°. 
+         Pattern pattern = Pattern.compile("^[A-Za-z]{1}[A-Za-z0-9]{3,19}$");   //¾ÆÀÌµð Á¶°Ç 
+         Matcher match = pattern.matcher(ID.getText());   
+         
+         if(match.matches()){      //¾ÆÀÌµð Á¶°Ç¹®
+            System.out.println("¸ÂÀ½");
+            
+         }else
+            System.out.println("s");
+      });
+      
+      join_button.addActionListener(e->{                                 //°¡ÀÔ¹öÆ°
+         char[] pwd = pw_textfield.getPassword();
+         char[] pwd1 = pw_textfield.getPassword();
+//         System.out.println(pwd);
+//         System.out.println(pwd1);
+         if(Arrays.equals(pwd, pwd1)) {      //ºñ¹Ð¹øÈ£ È®ÀÎ
+            System.out.println("ÀúÀåÇØµµ µÊ");
+         }
+         
+         Pattern pattern1 = Pattern.compile("^[°¡-ÆR]{2,4}$");                  //ÀÌ¸§Á¶°Ç
+         Matcher match1 = pattern1.matcher(name.getText());
+         if(match1.matches()) {
+            System.out.println("ÀÌ¸§°¡´É");
+         }
+         else
+            System.out.println("ÀÌ¸§ºÒ°¡");
+         
+         if(sexcheck_man.isSelected())                        //¼ºº°Á¶°Ç
+            System.out.println("³²ÀÚ");
+         else if(sexcheck_woman.isSelected())
+            System.out.println("¿©ÀÚ");
+         else
+        	 System.out.println("Ã¼Å©ÇØ¾ßÇÔ");
 //         
-//         if(match.matches()){      //¾ÆÀÌµð Á¶°Ç¹®
-//            System.out.println("¸ÂÀ½");
-//            
-//         }else
-//            System.out.println("s");
-//      });
-//      
-//      btnNewButton.addActionListener(e->{                                 //°¡ÀÔ¹öÆ°
-//         char[] pwd = passwordField.getPassword();
-//         char[] pwd1 = passwordconfirm.getPassword();
-////         System.out.println(pwd);
-////         System.out.println(pwd1);
-//         if(Arrays.equals(pwd, pwd1)) {      //ºñ¹Ð¹øÈ£ È®ÀÎ
-//            System.out.println("ÀúÀåÇØµµ µÊ");
-//         }
-//         
-//         Pattern pattern1 = Pattern.compile("^[°¡-ÆR]{2,4}$");                  //ÀÌ¸§Á¶°Ç
-//         Matcher match1 = pattern1.matcher(name.getText());
-//         if(match1.matches()) {
-//            System.out.println("ÀÌ¸§°¡´É");
-//         }
-//         else
-//            System.out.println("ÀÌ¸§ºÒ°¡");
-//         
-//         if(rdbtnNewRadioButton.getText() == "³²")                        //¼ºº°Á¶°Ç
-//            System.out.println("³²ÀÚ");
-//         else
-//            System.out.println("¿©ÀÚ");
-//         
-//         Pattern pattern2 = Pattern.compile("^[_ a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$");
-//         Matcher match2 = pattern2.matcher(email.getText());
-//         if(match2.matches()) 
-//            System.out.println("ÀÌ¸ÞÀÏ°¡´É");
-//         
-//         else
-//            System.out.println("ÀÌ¸ÞÀÏºÒ°¡");
-//         
-//      });
+         Pattern pattern2 = Pattern.compile("^[_ a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$");
+         Matcher match2 = pattern2.matcher(email.getText());
+         if(match2.matches()) 
+            System.out.println("ÀÌ¸ÞÀÏ°¡´É");
+         
+         else
+            System.out.println("ÀÌ¸ÞÀÏºÒ°¡");
+         
+      });
 
       join_button.addActionListener(e->{
          //ÀúÀå

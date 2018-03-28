@@ -1,15 +1,15 @@
 package Team1;
 
 public class User {
-	private String id;
-	private String pwd;
-	private String name;
-	private String sex;
-	private String email;
+	private String id; // 회원 아이디	
+	private String pwd; // 회원 비밀번호
+	private String name; // 회원 이름
+	private String sex; // 회원 성별
+	private String email; // 회원 이메일
 	
 	public User(String id, String pwd, String name, String sex, String email) {
 		
-		this.setId(id);
+		this.setId(id); 
 		this.setPwd(pwd);;
 		this.setName(name);
 		this.setSex(sex);
