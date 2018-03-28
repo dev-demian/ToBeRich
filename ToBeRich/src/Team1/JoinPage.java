@@ -19,6 +19,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Team1.DBManager;
+import Team1.User;
+
 public class JoinPage extends JFrame {
    private JTextField textField;
    private JTextField join_title;
@@ -116,21 +119,61 @@ public class JoinPage extends JFrame {
         	 System.out.println("체크해야함");
 //         
          Pattern pattern2 = Pattern.compile("^[_ a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$");
-         Matcher match2 = pattern2.matcher(email.getText());
+         Matcher match2 = pattern2.matcher(email_textfield.getText());
          if(match2.matches()) 
             System.out.println("이메일가능");
          
          else
             System.out.println("이메일불가");
          
+         
+         if(Arrays.equals(pwd, pwd1)&&match1.matches()&&(sexcheck_man.isSelected()||sexcheck_woman.isSelected())&&match2.matches()){
+        	 
+         	String fid = ID.getText(); 
+         	char[] temp_pwd = pw_textfield.getPassword();
+          	String change="";
+          	for(int i=0; i<pw_textfield.getPassword().length;i++) {
+          		change += Character.toString(temp_pwd[i]);
+          	}
+          	String fpwd = change;
+         	String fname = name.getText();
+         	String fsex = null;
+         	 if(sexcheck_man.isSelected())                       
+                  fsex = "남자";
+               else if(sexcheck_woman.isSelected())
+                  fsex = "여자";
+               else
+              	fsex = null;
+         	
+         	String femail = email_textfield.getText();
+         	 
+         	User user = new User(fid,fpwd,fname,fsex,femail);
+//         	System.out.println(fid+fpwd+fname+fsex+femail);
+//         	System.out.println(user.getId()+user.getName()+user.getEmail()+user.getPwd()+user.getSex());
+         	
+         	try {
+         		DBManager DBM = new DBManager();
+     			DBM.signup(fid,user);//첫가입시 이거 주석처리하고 
+     			
+     		} catch (Exception e1) {
+     			// TODO Auto-generated catch block
+     			e1.printStackTrace();
+     		}
+          }else
+         	 System.out.println("조건 만족하지 않았습니다 다시 입력해주세요");
       });
 
-      join_button.addActionListener(e->{
-         //저장
-      });
+     
       
       cancel_button.addActionListener(e->{
          //dispose
+    	  try {
+  			DBManager DBM = new DBManager();
+  			DBM.ShowUser();
+  		} catch (Exception e1) {
+  			// TODO Auto-generated catch block
+  			e1.printStackTrace();
+  		}
       });
       
       

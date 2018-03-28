@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Team1.DBManager;
+
 
 
 class LogIn extends JFrame{
@@ -100,6 +102,7 @@ class LogIn extends JFrame{
       this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//창 종료
      Login_button.addActionListener(e->{
     	 
+    	 
     	Pattern id_pattern = Pattern.compile(id_regex);  //아이디 조건 정규식
     	Matcher id_match = id_pattern.matcher(id_textFiled.getText());
     	
@@ -110,16 +113,33 @@ class LogIn extends JFrame{
     		change += Character.toString(temp_pwd[i]);
     	}
     	
- //   	System.out.println(change);
     		
      	Matcher pwd_match = pwd_pattern.matcher(change);
      	
+//   	System.out.println(change);
 //    	System.out.println(id_match.matches());
 //    	System.out.println(pwd_match.matches());
     	
     	if(id_match.matches()&&pwd_match.matches()) {
-    	  Main_Form callmain = new Main_Form();
-    	  dispose();
+    		try{
+    			DBManager DBM = new DBManager();
+        		boolean pass = DBM.login(id_textFiled.getText(), change);
+        		if(pass==true){
+        			System.out.println("통과");
+        			//정보 넘기기
+        			Main_Form callmain = new Main_Form();
+        			dispose();
+        		}else
+        			System.out.println("불통");
+        			//로그인 안됬다고 다이얼 로그 박스 띄우기 
+        		
+    		}
+    		catch(Exception er){
+    			er.printStackTrace();
+    		}
+    		
+    		
+    	  
     	}
     	 
     	
@@ -142,8 +162,8 @@ class LogIn extends JFrame{
    }
 }
 
-public class LoginPage {
-   public static void main(String[] args) {
-      LogIn window = new LogIn();
-   }
-}
+//public class LoginPage {
+//   public static void main(String[] args) {
+//	   LogIn window = new LogIn();
+//   }
+//}

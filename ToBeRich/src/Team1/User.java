@@ -1,6 +1,11 @@
 package Team1;
+import java.io.Serializable;
 
-public class User {
+public class User  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id; // 회원 아이디	
 	private String pwd; // 회원 비밀번호
 	private String name; // 회원 이름
@@ -49,6 +54,11 @@ public class User {
 		this.email = email;
 	}
 		
+	public String print_member(){
+		String member = "id:"+this.getId()+"pwd:"+this.getPwd()+"name:"+this.getName()+"sex:"+this.getSex()+"Email:"+this.getEmail();
+		System.out.println(member);
+		return member;
+	}
 	
 	
 }
