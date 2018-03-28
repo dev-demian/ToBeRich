@@ -18,28 +18,28 @@ import javax.swing.SwingConstants;
 
 public class JoinPage extends JFrame {
    private JTextField textField;
-   private JTextField textField_1;
+   private JTextField join_title;
    private JPanel panel_1;
-   private JTextField textField_2;
-   private JTextField textField_3;
-   private JTextField textField_4;
-   private JTextField textField_5;
-   private JTextField textField_6;
-   private JTextField textField_7;
+   private JTextField pw_textfiled;
+   private JTextField id_textfield;
+   private JTextField name_textfield;
+   private JTextField pw_textfiled_1;
+   private JTextField sex_textfield;
+   private JTextField email;
    private JPanel panel_2;
    private JTextField name;
-   private JTextField email;
+   private JTextField email_textfield;
    private JPanel panel_3;
-   private JRadioButton rdbtnNewRadioButton;
-   private JRadioButton rdbtnNewRadioButton_1;
    private JPanel panel_4;
-   private JButton btnNewButton;
-   private JButton btnNewButton_1;
-   private JPasswordField passwordField;
-   private JPasswordField passwordconfirm;
+   private JButton join_button;
+   private JButton cancel_button;
+   private JPasswordField pw_textfield;
+   private JPasswordField pw_textfield_1;
    private JPanel panel_5;
    private JTextField ID;
-   private JButton btnNewButton_2;
+   private JRadioButton sexcheck_man;
+   private JRadioButton sexcheck_woman;
+   private JButton overlap_id;
 
 //   /**
 //    * Launch the application.
@@ -120,11 +120,11 @@ public class JoinPage extends JFrame {
 //         
 //      });
 
-      btnNewButton.addActionListener(e->{
+      join_button.addActionListener(e->{
          //저장
       });
       
-      btnNewButton_1.addActionListener(e->{
+      cancel_button.addActionListener(e->{
          //dispose
       });
       
@@ -151,49 +151,49 @@ public class JoinPage extends JFrame {
       panel.add(textField);
       textField.setColumns(10);
       
-      textField_1 = new JTextField();
-      textField_1.setFont(new Font("굴림", Font.PLAIN, 40));
-      textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-      textField_1.setText("\uD68C\uC6D0\uAC00\uC785");
-      panel.add(textField_1);
-      textField_1.setColumns(10);
+      join_title = new JTextField();
+      join_title.setFont(new Font("굴림", Font.PLAIN, 40));
+      join_title.setHorizontalAlignment(SwingConstants.CENTER);
+      join_title.setText("\uD68C\uC6D0\uAC00\uC785");
+      panel.add(join_title);
+      join_title.setColumns(10);
       
       
-      textField_3 = new JTextField();
-      textField_3.setHorizontalAlignment(SwingConstants.CENTER);
-      textField_3.setText("\uC544\uC774\uB514");
-      panel_1.add(textField_3);
-      textField_3.setColumns(10);
+      id_textfield = new JTextField();
+      id_textfield.setHorizontalAlignment(SwingConstants.CENTER);
+      id_textfield.setText("\uC544\uC774\uB514");
+      panel_1.add(id_textfield);
+      id_textfield.setColumns(10);
       
-      textField_2 = new JTextField();
-      textField_2.setText("\uBE44\uBC00\uBC88\uD638");
-      textField_2.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_1.add(textField_2);
-      textField_2.setColumns(10);
+      pw_textfiled = new JTextField();
+      pw_textfiled.setText("\uBE44\uBC00\uBC88\uD638");
+      pw_textfiled.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_1.add(pw_textfiled);
+      pw_textfiled.setColumns(10);
       
-      textField_5 = new JTextField();
-      textField_5.setText("\uBE44\uBC00\uBC88\uD638 \uD655\uC778");
-      textField_5.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_1.add(textField_5);
-      textField_5.setColumns(10);
+      pw_textfiled_1 = new JTextField();
+      pw_textfiled_1.setText("\uBE44\uBC00\uBC88\uD638 \uD655\uC778");
+      pw_textfiled_1.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_1.add(pw_textfiled_1);
+      pw_textfiled_1.setColumns(10);
       
-      textField_4 = new JTextField();
-      textField_4.setHorizontalAlignment(SwingConstants.CENTER);
-      textField_4.setText("\uC774\uB984");
-      panel_1.add(textField_4);
-      textField_4.setColumns(10);
+      name_textfield = new JTextField();
+      name_textfield.setHorizontalAlignment(SwingConstants.CENTER);
+      name_textfield.setText("\uC774\uB984");
+      panel_1.add(name_textfield);
+      name_textfield.setColumns(10);
       
-      textField_6 = new JTextField();
-      textField_6.setHorizontalAlignment(SwingConstants.CENTER);
-      textField_6.setText("\uC131\uBCC4");
-      panel_1.add(textField_6);
-      textField_6.setColumns(10);
+      sex_textfield = new JTextField();
+      sex_textfield.setHorizontalAlignment(SwingConstants.CENTER);
+      sex_textfield.setText("\uC131\uBCC4");
+      panel_1.add(sex_textfield);
+      sex_textfield.setColumns(10);
       
-      textField_7 = new JTextField();
-      textField_7.setHorizontalAlignment(SwingConstants.CENTER);
-      textField_7.setText("\uC774\uBA54\uC77C");
-      panel_1.add(textField_7);
-      textField_7.setColumns(10);
+      email = new JTextField();
+      email.setHorizontalAlignment(SwingConstants.CENTER);
+      email.setText("\uC774\uBA54\uC77C");
+      panel_1.add(email);
+      email.setColumns(10);
       
       panel_5 = new JPanel();
       panel_2.add(panel_5);
@@ -203,17 +203,17 @@ public class JoinPage extends JFrame {
       panel_5.add(ID);
       ID.setColumns(10);
       
-      btnNewButton_2 = new JButton("중복확인");
-      btnNewButton_2.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}   });
-      panel_5.add(btnNewButton_2);
+      overlap_id = new JButton("중복확인");
+      overlap_id.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent e) {}   });
+      panel_5.add(overlap_id);
       
-      passwordField = new JPasswordField();
-      passwordField.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_2.add(passwordField);
+      pw_textfield = new JPasswordField();
+      pw_textfield.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_2.add(pw_textfield);
       
-      passwordconfirm = new JPasswordField();
-      passwordconfirm.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_2.add(passwordconfirm);
+      pw_textfield_1 = new JPasswordField();
+      pw_textfield_1.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_2.add(pw_textfield_1);
       
       name = new JTextField();
       name.setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,31 +224,31 @@ public class JoinPage extends JFrame {
       panel_2.add(panel_3);
       panel_3.setLayout(new GridLayout(0, 2, 0, 0));
       
-      rdbtnNewRadioButton = new JRadioButton("남");
-      rdbtnNewRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_3.add(rdbtnNewRadioButton);
+      sexcheck_man = new JRadioButton("남");
+      sexcheck_man.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_3.add(sexcheck_man);
       
-      rdbtnNewRadioButton_1 = new JRadioButton("여");
-      rdbtnNewRadioButton_1.setHorizontalAlignment(SwingConstants.CENTER);
-      panel_3.add(rdbtnNewRadioButton_1);
+      sexcheck_woman = new JRadioButton("여");
+      sexcheck_woman.setHorizontalAlignment(SwingConstants.CENTER);
+      panel_3.add(sexcheck_woman);
       
       ButtonGroup group = new ButtonGroup();   //버튼 그루핑
-      group.add(rdbtnNewRadioButton);
-      group.add(rdbtnNewRadioButton_1);
+      group.add(sexcheck_man);
+      group.add(sexcheck_woman);
       
-      email = new JTextField();
-      panel_2.add(email);
-      email.setColumns(10);
+      email_textfield = new JTextField();
+      panel_2.add(email_textfield);
+      email_textfield.setColumns(10);
       
       panel_4 = new JPanel();
       getContentPane().add(panel_4, BorderLayout.SOUTH);
       panel_4.setLayout(new GridLayout(1, 2, 0, 0));
       
-      btnNewButton = new JButton("\uAC00\uC785");
-      panel_4.add(btnNewButton);
+      join_button = new JButton("\uAC00\uC785");
+      panel_4.add(join_button);
       
-      btnNewButton_1 = new JButton("\uCDE8\uC18C");
-      panel_4.add(btnNewButton_1);
+      cancel_button = new JButton("\uCDE8\uC18C");
+      panel_4.add(cancel_button);
       
       
    }

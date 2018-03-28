@@ -18,11 +18,16 @@ import javax.swing.border.EmptyBorder;
 class LogIn extends JFrame{
    
    private JPanel mainPanel = new JPanel();
+   
+   //로그인 아이디 , 비밀번호 입력란
    private JTextField id_textFiled = new JTextField();
    private JPasswordField pw_Filed = new JPasswordField();
+   
+   //아이디 , 비밀번호 라벨
    private JLabel id_label = new JLabel("ID");
    private JLabel pw_label = new JLabel("PW");
    private JLabel title_label = new JLabel("1\uC5B5 \uB9CC\uB4E4\uAE30 \uD504\uB85C\uC81D\uD2B8");
+   //로그인 , 회원 가입 버튼
    private JButton Login_button = new JButton("LOGIN");
    private JButton join_button = new JButton("회원가입");
 
@@ -89,12 +94,23 @@ class LogIn extends JFrame{
    private void event() {
       this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);//창 종료
       Login_button.addActionListener(e->{
-         Main_Form callmain = new Main_Form();
+    	 if(id_textFiled.getText().equals("master")) {
+    		 
+    	  Main_Form callmain = new Main_Form();
+    	  dispose();
+    	 }
       });
       join_button.addActionListener(e->{
          JoinPage join = new JoinPage();
       });
+      
+      
+	
+	
      
+      
+    	  
+    	  
       
       
    }

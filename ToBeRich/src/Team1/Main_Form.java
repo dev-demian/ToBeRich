@@ -44,7 +44,8 @@ class Main_Form extends JFrame {
    };
    private JTable table;
    //main에 하던 설정들을 생성자에서 진행
-   public Main_Form() {
+   public Main_Form( ) {
+	  this.user= user;
       this.display();//화면 구성 관련 처리
       this.event();//이벤트 관련 처리
       this.menu();//메뉴 관련 처리
