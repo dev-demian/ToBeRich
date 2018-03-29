@@ -14,12 +14,17 @@ import java.util.Map;
 
 public class DBManager {
 	File Userdb;
-	private Map<String,User> userinfo;
+	File Savingsdb;
+	
+	private Map<String,User> userinfo;//Map<아이디,사용자class>
+	private Map<String,Savings> savingsinfo;//Map<적금명,적금class>
+	
 	
 	public DBManager() throws ClassNotFoundException, IOException{
 		// 연결됨
 		this.Userdb = new File("DB","user.txt");
-			
+		this.Savingsdb = new File("DB","savings.txt");
+		/////////////////////////////////////////////////////////////////////////////////////////////
 		if(this.Userdb.exists()){
 			try{
 				System.out.println("파일이 이미 있어서 파일을 불러옵니다");
@@ -49,6 +54,38 @@ public class DBManager {
 			}
 			
 		}
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		if(this.Savingsdb.exists()){
+			try{
+				System.out.println("적금파일이 이미 있어서 파일을 불러옵니다");
+				FileInputStream sin = new FileInputStream(Savingsdb);
+				BufferedInputStream sbufferin = new BufferedInputStream (sin);
+				ObjectInputStream sdatain = new ObjectInputStream(sbufferin);
+				savingsinfo  = (Map<String,Savings>) sdatain.readObject();
+				sdatain.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else{
+			System.out.println("적금파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
+			
+			Savings defalt_saving = new Savings("신나라사랑적금","신한은행","12개월","100000","단리","4.4","5,4","가산금리 최고 연 1.0% 금여이체 실적 보유시 0.7%");
+			Map<String,Savings> defalt_smap = new HashMap<String,Savings>();
+			defalt_smap.put("신나라사랑적금", defalt_saving);
+			try{
+				FileOutputStream sdbout = new FileOutputStream(Savingsdb);
+				BufferedOutputStream sdbbufferout = new BufferedOutputStream(sdbout);
+				ObjectOutputStream sdbdataout = new ObjectOutputStream(sdbbufferout);
+				sdbdataout.writeObject(defalt_smap);
+				sdbdataout.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
 	}
 	
 
@@ -121,8 +158,51 @@ public class DBManager {
 				
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	public void savings_save(String sname, Savings save){
+		// 회원가입	
+		boolean singupflg = true;  // true면 적금저장 완료 
+		
+		for(Map.Entry<String,Savings> m : savingsinfo.entrySet()){
+		// 아이디 일치 검사 일치시 singupflg == false;
+			if(m.getKey().equals(sname)){
+				System.out.print("중복!! ");
+				singupflg = false;
+			}
+		}
+		
+		if(singupflg == true){
+			System.out.println("적금등록 진행 ");
+			Map<String,Savings> signupinfo = new HashMap<String, Savings>();
+			signupinfo.put(sname, save);
+			Map<String, Savings> mergeinfo = new HashMap<String, Savings>();
+			mergeinfo.putAll(savingsinfo);
+			mergeinfo.putAll(signupinfo);
+			try{
+				FileOutputStream sout = new FileOutputStream(Savingsdb);
+				BufferedOutputStream sbufferout = new BufferedOutputStream(sout);
+				ObjectOutputStream sdataout = new ObjectOutputStream(sbufferout);
+				sdataout.writeObject(mergeinfo);
+				sdataout.flush();
+				sdataout.close();
+				System.out.println("적금등록 완료");
+			}catch(IOException e){
+				System.out.print("DB 적금등록 연동 실패");
+			}		
+		}else{
+			System.out.print("이미 일치하는적금명이 있습니다!!");
+		}
+	}
+	
+	
+	
 	public void ShowUser(){
 		for (Map.Entry<String, User> entry : userinfo.entrySet()) {
+		    System.out.println(entry.getKey() + ":" + entry.getValue().print_member());
+		}
+	}
+	public void ShowSavings(){
+		for (Map.Entry<String, Savings> entry : savingsinfo.entrySet()) {
 		    System.out.println(entry.getKey() + ":" + entry.getValue().print_member());
 		}
 	}
