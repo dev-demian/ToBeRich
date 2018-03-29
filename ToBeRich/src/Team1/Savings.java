@@ -1,21 +1,25 @@
 package Team1;
 
-public class Savings {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-	private String name;//적금명
+public class Savings implements Serializable{
+
+	private String name;//적금상품명
 	private String bank;//은행명
-	private int term;//적금기간(12개월)
-	private int maxsave;//최대 납입가능 금액  (없을시 0)
-	private boolean interests_calculation; //이자 계산 방식 (true:단리 , false:복리) 
-	private int basic_interest;//기본금리
-	private int upgrade_interest;//우대금리
+	private String term;//적금기간(12개월)
+	private String maxsave;//최대 납입가능 금액  (없을시 0)
+	private String interests_calculation; //이자 계산 방식 (true:단리 , false:복리) 
+	private String basic_interest;//기본금리
+	private String upgrade_interest;//우대금리
 	private String upgrade_rate;//우대 조건 (월납입금이 upgrade_rate 보다 커야한다 )
 	
 	
 	
 	
-	public Savings(String name, String bank, int term, int maxsave, boolean interests_calculation, int basic_interest,
-			int upgrade_interest, String upgrade_rate) {
+	public Savings(String name, String bank, String term, String maxsave, String interests_calculation, String basic_interest,
+			String upgrade_interest, String upgrade_rate) {
 		super();
 		this.setName(name);
 		this.setBank(bank);
@@ -39,34 +43,34 @@ public class Savings {
 	public void setBank(String bank) {
 		this.bank = bank;
 	}
-	public int getTerm() {
+	public String getTerm() {
 		return term;
 	}
-	public void setTerm(int term) {
+	public void setTerm(String term) {
 		this.term = term;
 	}
-	public int getMaxsave() {
+	public String getMaxsave() {
 		return maxsave;
 	}
-	public void setMaxsave(int maxsave) {
+	public void setMaxsave(String maxsave) {
 		this.maxsave = maxsave;
 	}
-	public boolean isInterests_calculation() {
+	public String getInterests_calculation() {
 		return interests_calculation;
 	}
-	public void setInterests_calculation(boolean interests_calculation) {
+	public void setInterests_calculation(String interests_calculation) {
 		this.interests_calculation = interests_calculation;
 	}
-	public int getBasic_interest() {
+	public String getBasic_interest() {
 		return basic_interest;
 	}
-	public void setBasic_interest(int basic_interest) {
+	public void setBasic_interest(String basic_interest) {
 		this.basic_interest = basic_interest;
 	}
-	public int getUpgrade_interest() {
+	public String getUpgrade_interest() {
 		return upgrade_interest;
 	}
-	public void setUpgrade_interest(int upgrade_interest) {
+	public void setUpgrade_interest(String upgrade_interest) {
 		this.upgrade_interest = upgrade_interest;
 	}
 	public String getUpgrade_rate() {
@@ -76,7 +80,24 @@ public class Savings {
 		this.upgrade_rate = upgrade_rate;
 	}
 	
-	
+	public List<String> getList(){
+		List<String> list = new ArrayList<String>();
+		list.add(name);
+		list.add(bank);
+		list.add(term);
+		list.add(maxsave);
+		list.add(interests_calculation);
+		list.add(basic_interest);
+		list.add(upgrade_interest);
+		
+		return list;
+		
+	}
+	public String print_member(){
+		String member = "적금명:"+this.getName()+"은행명:"+this.getBank()+"적금기간:"+this.getTerm()+"최대납입금:"+this.getMaxsave()+"이자계산 방식:"+this.getInterests_calculation();
+		System.out.println(member);
+		return member;
+	}
 	
 
 }
