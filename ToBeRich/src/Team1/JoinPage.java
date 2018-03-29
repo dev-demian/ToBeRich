@@ -95,10 +95,25 @@ public class JoinPage extends JFrame {
       });
       
       join_button.addActionListener(e->{                                 //가입버튼
-         char[] pwd = pw_textfield.getPassword();
+    	
+    	Pattern pwd_pattern = Pattern.compile("[a-z0-9]{6,15}"); // 비밀번호 조건 정규식
+      	char[] jtemp_pwd = pw_textfield.getPassword();
+      	String changestr="";
+      	for(int i=0; i<pw_textfield.getPassword().length;i++) {
+      		changestr += Character.toString(jtemp_pwd[i]);
+      	}
+      	Matcher pwd_match = pwd_pattern.matcher(changestr);
+      	
+    	if(pwd_match.matches()){							//패스워드 정규식 확인
+    		System.out.println("비밀번호 저장 가능");
+    	}else
+    		System.out.println("비밀번호 부적합");
+    	
+    	 char[] pwd = pw_textfield.getPassword();
          char[] pwd1 = pw_textfield.getPassword();
 //         System.out.println(pwd);
 //         System.out.println(pwd1);
+         
          if(Arrays.equals(pwd, pwd1)) {      //비밀번호 확인
             System.out.println("저장해도 됨");
          }
@@ -127,7 +142,7 @@ public class JoinPage extends JFrame {
             System.out.println("이메일불가");
          
          
-         if(Arrays.equals(pwd, pwd1)&&match1.matches()&&(sexcheck_man.isSelected()||sexcheck_woman.isSelected())&&match2.matches()){
+         if(pwd_match.matches()&&Arrays.equals(pwd, pwd1)&&match1.matches()&&(sexcheck_man.isSelected()||sexcheck_woman.isSelected())&&match2.matches()){
         	 
          	String fid = ID.getText(); 
          	char[] temp_pwd = pw_textfield.getPassword();
@@ -154,6 +169,7 @@ public class JoinPage extends JFrame {
          	try {
          		DBManager DBM = new DBManager();
      			DBM.signup(fid,user);//첫가입시 이거 주석처리하고 
+     			dispose();
      			
      		} catch (Exception e1) {
      			// TODO Auto-generated catch block
@@ -170,6 +186,7 @@ public class JoinPage extends JFrame {
     	  try {
   			DBManager DBM = new DBManager();
   			DBM.ShowUser();
+  			dispose();
   		} catch (Exception e1) {
   			// TODO Auto-generated catch block
   			e1.printStackTrace();
