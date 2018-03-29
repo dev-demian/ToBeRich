@@ -123,11 +123,12 @@ class LogIn extends JFrame{
     	if(id_match.matches()&&pwd_match.matches()) {
     		try{
     			DBManager DBM = new DBManager();
-        		boolean pass = DBM.login(id_textFiled.getText(), change);
-        		if(pass==true){
+        		User target_user = DBM.login(id_textFiled.getText(), change);
+        		if(target_user.getId().equals(id_textFiled.getText())){
         			System.out.println("통과");
         			//정보 넘기기
-        			Main_Form callmain = new Main_Form();
+//        			System.out.println(target_user.print_member());//어떤 유저가 넘어가는지 확인
+        			Main_Form callmain = new Main_Form(target_user);
         			dispose();
         		}else
         			System.out.println("불통");

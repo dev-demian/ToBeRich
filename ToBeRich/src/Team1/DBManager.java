@@ -87,27 +87,38 @@ public class DBManager {
 		}
 	}
 	
-	public boolean login(String id , String pwd){
+	public User login(String id , String pwd){
 		int i = 0;
 		int user = 0;
 		boolean pass=false;
+		User target_user= null;
 		for(Map.Entry<String,User> m : userinfo.entrySet()){
 			if(m.getKey().equals(id)&&m.getValue().getPwd().equals(pwd)){
 				i+=1;
+				target_user =m.getValue();
+				pass=true;
 			}
 			user++;
 		}
+			
 		if(i ==1){
 			System.out.println("로그인 성공");
 			pass=true;
+			
 		}else if(i ==0)
 			System.out.println("로그인 실패");
-		else 
+			
+		else {
 			System.out.println("로그인 오류 발생(중복 ID 발생)");
+			
+		}
+		System.out.println("총회원 : "+user+"명");
 		
-			System.out.println("총회원 : "+user+"명");
-		return pass;
-		
+		if(pass==true){
+			return target_user;
+		}else
+		return null;
+				
 	}
 	
 	public void ShowUser(){
