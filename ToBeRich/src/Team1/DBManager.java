@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class DBManager {
 	File Userdb;
@@ -205,6 +206,36 @@ public class DBManager {
 		for (Map.Entry<String, Savings> entry : savingsinfo.entrySet()) {
 		    System.out.println(entry.getKey() + ":" + entry.getValue().print_member());
 		}
+	}
+	
+	public Object[][] CallTable(){
+		int x =0;
+		int y =9;// 선택  상품명 은행명 기간 최납금 이자적용방식 기본금리 우대금리 우대적용
+		
+		for(Entry<String, Savings> m : savingsinfo.entrySet()){//2차원 배열을 X Y를 측정하기 위한 foreach문
+			x++;
+		}
+		
+		//table에 넣어주기 
+		Object[][] data = new Object[x][y];
+		int data_x=0;
+		for(Entry<String, Savings> m : savingsinfo.entrySet()){//data에 값을 넣어주기 위한 foreach문
+			
+			data[data_x][0] = false;
+			data[data_x][1] = m.getValue().getName();
+			data[data_x][2] = m.getValue().getBank();
+			data[data_x][3] = m.getValue().getTerm();
+			data[data_x][4] = m.getValue().getMaxsave();
+			data[data_x][5] = m.getValue().getInterests_calculation();
+			data[data_x][6] = m.getValue().getBasic_interest();
+			data[data_x][7] = m.getValue().getUpgrade_interest();
+			data[data_x][8] = false;
+			
+			data_x++;
+			
+		}
+		return data;
+		
 	}
 	
 }
