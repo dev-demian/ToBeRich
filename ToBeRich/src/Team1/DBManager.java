@@ -23,7 +23,7 @@ public class DBManager {
 	
 	public DBManager() throws ClassNotFoundException, IOException{
 		// 연결됨
-		this.Userdb = new File("DB","user.txt");
+		this.Userdb = new File("DB","user.txt");// 나중에 상대 경로로 바꿔주기
 		this.Savingsdb = new File("DB","savings.txt");
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		if(this.Userdb.exists()){

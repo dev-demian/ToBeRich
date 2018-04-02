@@ -2,17 +2,25 @@ package Team1;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JEditorPane;
+import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.JScrollPane;
 
 public class Simulation_Form extends JFrame {
@@ -21,7 +29,7 @@ public class Simulation_Form extends JFrame {
    JPanel panel = new JPanel();
    JLabel lblNewLabel = new JLabel("\uC2DC\uBBAC\uB808\uC774\uC158 Form");
    JPanel panel_2 = new JPanel();
-   JLabel lblNewLabel_1 = new JLabel("\uC6D4 \uB0A9\uC785\uAE08 :  ");
+   JLabel lblNewLabel_1 = new JLabel	("\uC6D4 \uB0A9\uC785\uAE08 :  ");
    JEditorPane editorPane = new JEditorPane();
    JLabel label = new JLabel("                   ");
    JButton button = new JButton("\uACC4\uC0B0\uD558\uAE30");
@@ -56,8 +64,8 @@ public class Simulation_Form extends JFrame {
       contentPane.setLayout(new BorderLayout(0, 0));
       setContentPane(contentPane);
       setVisible(true);
-      this.event();
       this.display();
+      this.event();
       
       
       
@@ -81,15 +89,52 @@ public class Simulation_Form extends JFrame {
           		"\uC0C1\uD488\uC120\uD0DD", "        \uC801  \uAE08  \uC0C1  \uD488  \uBA85", "\uC740\uD589\uBA85", "\uAE30\uAC04(\uC6D4)", "\uCD5C\uB300\uB0A9\uC785\uAC00\uB2A5\uAE08\uC561", "\uC774\uC790\uC801\uC6A9\uBC29\uC2DD", "\uAE30\uBCF8\uAE08\uB9AC", "\uC6B0\uB300\uAE08\uB9AC", "\uC6B0\uB300\uC801\uC6A9"
           	};//컬럽명을 담당하는 string[]
          
-         //custom Tabel클래스 
-         CustomTable CT = new CustomTable(data,c_name);
-         table.setModel(CT);
+         //custom Tabel클래스 (DefaultTableModel사용하기 위해 일단 보류)
+         //CustomTable CT = new CustomTable(data,c_name);
+         DefaultTableModel model = new DefaultTableModel(data,new String[] {
+          		"\uC0C1\uD488\uC120\uD0DD", "        \uC801  \uAE08  \uC0C1  \uD488  \uBA85", "\uC740\uD589\uBA85", "\uAE30\uAC04(\uC6D4)", "\uCD5C\uB300\uB0A9\uC785\uAC00\uB2A5\uAE08\uC561", "\uC774\uC790\uC801\uC6A9\uBC29\uC2DD", "\uAE30\uBCF8\uAE08\uB9AC", "\uC6B0\uB300\uAE08\uB9AC", "\uC6B0\uB300\uC801\uC6A9"
+          	}
+          ){
+        	 @Override
+         	public Class<?> getColumnClass(int columnIndex) {//이 클래스로 들어오는 값을 지정해줘서 Checkbox를 뿌려줌 (0번쨰, 8번째)
+         		// TODO Auto-generated method stub
+         		 switch(columnIndex){
+         		 case 0: return Boolean.class;
+         		 case 1: return String.class;
+         		 case 2: return String.class;
+         		 case 3: return String.class;
+         		 case 4: return String.class;
+         		 case 5: return String.class;
+         		 case 6: return String.class;
+         		 case 7: return String.class;
+         		 case 8: return Boolean.class;
+         		 
+         		 }
+         		return Object.class;
+         	}
+         };
+          
+         table.setModel(model);
          table.getColumnModel().getColumn(1).setPreferredWidth(201);
          table.getColumnModel().getColumn(3).setPreferredWidth(76);
          table.getColumnModel().getColumn(4).setPreferredWidth(126);
          table.getColumnModel().getColumn(5).setPreferredWidth(112);
          
          scrollPane.setViewportView(table);
+         //클릭 리스너 구현
+         model.addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				Object obj =  model.getDataVector().get(e.getLastRow());
+				Vector row = (Vector)obj;
+				System.out.println(row.get(0));// 클릭시 해당 열의 1번째 값(선택 출력)(선택되었는지 아닌지)
+				System.out.println(row.get(8));// 클릭시 해당 열의 7번째 값(우대적용 출력)(우대 적용되는지  아닌지)
+				
+			}
+		});
+         
          
          contentPane.add(panel_2, BorderLayout.SOUTH);
          
@@ -104,9 +149,46 @@ public class Simulation_Form extends JFrame {
    } 
    
    private void event() {
-      button.addActionListener(e->{
-      Simulation_Result SRcall = new Simulation_Result();   
+	   button.addActionListener(e->{
+		   //클릭시 해당 테이블을 긁어와서 새로운 변수에 다 때려박아야함 true 만 읽어와서 
+		   int t_row = table.getRowCount();
+		   int t_column = table.getColumnCount();
+		   int val_row=0;
+		   for (int j = 0; j  < t_row; j++) {			// 앞에가 True면 
+			   if((Boolean)table.getValueAt(j,0)){
+				   val_row++;							// 선택된 개수만큼val의 row인덱스 카운팅
+				   for (int i = 0; i  < t_column; i++) {
+//			           System.out.println(table.getValueAt(j, i));  //테이블 전체 출력
+			       }
+			   }
+		   }
+//		   System.out.println(val_row);
+		   Object[][] val = new Object[val_row][t_column];
+		   int val_x = 0;
+		   for (int j = 0; j  < t_row; j++) {			
+			   if((Boolean)table.getValueAt(j,0)){
+				   for (int i = 0; i  < t_column; i++) {
+//			           System.out.println(table.getValueAt(j, i)); // 선택된 테이블 데이터만 출력
+					   val[val_x][i]=table.getValueAt(j, i);
+			       }
+				   val_x++;
+			   }
+		   }
+//		  for(int i=0;i<val_x;i++){							// 보낼 데이터 출력해보기 
+//			  for(int j=0;j<t_column;j++){
+//				  System.out.println(val[i][j]);
+//				  
+//			  }
+//		  }
+//		   System.out.println(val.length);					// 보낼 데이터의 길이확인 
+		   
+		   //여기에 계산하는거 Cul 클래스 넣어줘서 계산 끝내고 리턴값 받아서 매개변수로 넣어줌 
+		   
+//		   Simulation_Result SRcall = new Simulation_Result();   
       });
    } 
+   
+  
+
 
 }
