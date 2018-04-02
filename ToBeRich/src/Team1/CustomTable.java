@@ -3,7 +3,7 @@ package Team1;
 import javax.swing.table.AbstractTableModel;
 
 
-public class CustomTable extends AbstractTableModel{
+public class CustomTable extends AbstractTableModel {
 	Object[][] data;
 	String[]  c_name;
 	public CustomTable(Object[][] data,String[]  c_name) {
@@ -31,5 +31,6 @@ public class CustomTable extends AbstractTableModel{
 		// TODO Auto-generated method stub
 		return c_name[column];
 	}
+	
 	
 }
