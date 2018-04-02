@@ -30,7 +30,7 @@ public class Simulation_Form extends JFrame {
    JLabel lblNewLabel = new JLabel("\uC2DC\uBBAC\uB808\uC774\uC158 Form");
    JPanel panel_2 = new JPanel();
    JLabel lblNewLabel_1 = new JLabel	("\uC6D4 \uB0A9\uC785\uAE08 :  ");
-   JEditorPane editorPane = new JEditorPane();
+   JEditorPane Total_money = new JEditorPane();
    JLabel label = new JLabel("                   ");
    JButton button = new JButton("\uACC4\uC0B0\uD558\uAE30");
    private final JScrollPane scrollPane = new JScrollPane();
@@ -68,7 +68,7 @@ public class Simulation_Form extends JFrame {
       this.event();
       
       
-      
+     
    }
    private void display() {
          contentPane.add(panel, BorderLayout.NORTH);
@@ -140,7 +140,7 @@ public class Simulation_Form extends JFrame {
          
          panel_2.add(lblNewLabel_1);
          
-         panel_2.add(editorPane);
+         panel_2.add(Total_money);
          
          panel_2.add(label);
          
@@ -149,7 +149,7 @@ public class Simulation_Form extends JFrame {
    } 
    
    private void event() {
-	   button.addActionListener(e->{
+	   button.addActionListener(e->{  // if문으로 해당 Text필드에 값이 있어야 넘겨야됨  또 아무것도 체크 안되있을시 체크하라고 떠야함 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		   //클릭시 해당 테이블을 긁어와서 새로운 변수에 다 때려박아야함 true 만 읽어와서 
 		   int t_row = table.getRowCount();
 		   int t_column = table.getColumnCount();
@@ -174,6 +174,7 @@ public class Simulation_Form extends JFrame {
 				   val_x++;
 			   }
 		   }
+		   
 //		  for(int i=0;i<val_x;i++){							// 보낼 데이터 출력해보기 
 //			  for(int j=0;j<t_column;j++){
 //				  System.out.println(val[i][j]);
@@ -184,6 +185,12 @@ public class Simulation_Form extends JFrame {
 		   
 		   //여기에 계산하는거 Cul 클래스 넣어줘서 계산 끝내고 리턴값 받아서 매개변수로 넣어줌 
 		   
+		   int total_money =  Integer.parseInt(Total_money.getText().toString());
+		   
+		   System.out.println(total_money);
+		   Savings_Calculator SC = new Savings_Calculator(val,total_money);
+		   SC.sort();
+		   SC.Calculate();
 //		   Simulation_Result SRcall = new Simulation_Result();   
       });
    } 

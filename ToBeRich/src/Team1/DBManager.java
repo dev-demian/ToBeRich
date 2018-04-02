@@ -70,7 +70,7 @@ public class DBManager {
 		}else{
 			System.out.println("적금파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
 			
-			Savings defalt_saving = new Savings("신나라사랑적금","신한은행","12개월","100000","단리","4.4","5,4","가산금리 최고 연 1.0% 금여이체 실적 보유시 0.7%");
+			Savings defalt_saving = new Savings("신나라사랑적금","신한은행","12개월","100000","단리","4.4","5.4","가산금리 최고 연 1.0% 금여이체 실적 보유시 0.7%");
 			Map<String,Savings> defalt_smap = new HashMap<String,Savings>();
 			defalt_smap.put("신나라사랑적금", defalt_saving);
 			try{
