@@ -38,7 +38,6 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    JLabel imgLabel;
    JTextArea textArea_1 = new JTextArea();
    JTextArea textArea_2 = new JTextArea();
-   JTextArea textArea_3 = new JTextArea();
    JButton edit_button = new JButton("\uC218\uC815/\uC0AD\uC81C");
    //DS DB경로 생성
    private File target = new File("DB","board.txt");
@@ -51,6 +50,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    private Map<Integer,List<Object>> map = new HashMap<>();
    private List<Object> list = new ArrayList();
    String userid;//해당 유저만 수정 삭제폼을 불러오기위한 구분자
+   ImageIcon ic;
    
    
    
@@ -117,7 +117,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       
       
       label_1.setFont(new Font("굴림", Font.PLAIN, 14));
-      label_1.setBounds(495, 10, 28, 21);
+      label_1.setBounds(488, 10, 28, 21);
       mainPanel.add(label_1);
       textField.setEditable(false);
       
@@ -137,7 +137,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       textField_2.setEditable(false);
       
       textField_2.setColumns(10);
-      textField_2.setBounds(535, 11, 167, 26);
+      textField_2.setBounds(535, 8, 167, 26);
       mainPanel.add(textField_2);
       //DS list의 5인덱스(날짜)를 필드에 채움
       textField_2.setText((String)list.get(5));
@@ -164,15 +164,17 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       JScrollPane scroll_1 = new JScrollPane(textArea_2);
       scroll_1.setBounds(12, 371, 690, 130);
       mainPanel.add(scroll_1);
-      textArea_3.setEditable(false);
-      
-      
-      textArea_3.setBounds(720,30,240,500);
-      mainPanel.add(textArea_3);
       
       
       edit_button.setBounds(605, 511, 97, 45);
       mainPanel.add(edit_button);
+     
+      ic  = new ImageIcon("property/googlead.png");
+      JLabel ad_sense = new JLabel();
+      ad_sense.setIcon(ic);
+      ad_sense.setBounds(716, 42, 257, 514);
+      
+      mainPanel.add(ad_sense);
    }
 
    private void event() {

@@ -38,7 +38,6 @@ class Board_main extends JFrame{
    JLabel imgLabel;
    JTextArea textArea_1 = new JTextArea();
    JTextArea textArea_2 = new JTextArea();
-   JTextArea textArea_3 = new JTextArea();
    JButton btnNewButton = new JButton("수정");
    JButton button = new JButton("삭제");
    //DS DB경로 생성
@@ -51,7 +50,7 @@ class Board_main extends JFrame{
    //DS 클릭한 게시물의 map데이터를 가져와 갱신할 map,list생성
    private Map<Integer,List<Object>> map = new HashMap<>();
    private List<Object> list = new ArrayList();
-   
+   ImageIcon ic;
    
    //main에 하던 설정들을 생성자에서 진행
    public Board_main(int number) {
@@ -157,10 +156,6 @@ class Board_main extends JFrame{
       JScrollPane scroll_1 = new JScrollPane(textArea_2);
       scroll_1.setBounds(12, 371, 690, 130);
       mainPanel.add(scroll_1);
-      
-      
-      textArea_3.setBounds(720,30,240,500);
-      mainPanel.add(textArea_3);
       //textArea_3.setText("광고"); //광고 내용이 담길 공간
       
       btnNewButton.setBounds(500, 511, 97, 45);
@@ -169,6 +164,11 @@ class Board_main extends JFrame{
       
       button.setBounds(605, 511, 97, 45);
       mainPanel.add(button);
+      ic  = new ImageIcon("property/googlead.png");
+      JLabel ad_sense = new JLabel();
+      ad_sense.setIcon(ic);
+      ad_sense.setBounds(716, 42, 257, 514);
+      mainPanel.add(ad_sense);
    }
 
    private void event() {
