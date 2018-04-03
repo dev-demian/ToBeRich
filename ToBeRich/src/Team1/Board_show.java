@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-class Board_show extends JFrame{
+class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감 
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
    JPanel mainPanel = new JPanel();
    JLabel lblNewLabel = new JLabel("제목");
@@ -38,7 +38,6 @@ class Board_show extends JFrame{
    JLabel imgLabel;
    JTextArea textArea_1 = new JTextArea();
    JTextArea textArea_2 = new JTextArea();
-   JTextArea textArea_3 = new JTextArea();
    JButton edit_button = new JButton("\uC218\uC815/\uC0AD\uC81C");
    //DS DB경로 생성
    private File target = new File("DB","board.txt");
@@ -50,12 +49,16 @@ class Board_show extends JFrame{
    //DS 클릭한 게시물의 map데이터를 가져와 갱신할 map,list생성
    private Map<Integer,List<Object>> map = new HashMap<>();
    private List<Object> list = new ArrayList();
+   String userid;//해당 유저만 수정 삭제폼을 불러오기위한 구분자
+   ImageIcon ic;
+   
    
    
    //main에 하던 설정들을 생성자에서 진행
-   public Board_show(int number) {
+   public Board_show(int number,String userid) {
 	   //DS 생성자에서 게시물 번호를 전달 받아 number변수에 저장한다
 	  this.number = number;
+	  this.userid= userid;
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
 	  try{
 		  //DS DB에서 읽어오는 스트림 생성
@@ -114,7 +117,7 @@ class Board_show extends JFrame{
       
       
       label_1.setFont(new Font("굴림", Font.PLAIN, 14));
-      label_1.setBounds(495, 10, 28, 21);
+      label_1.setBounds(488, 10, 28, 21);
       mainPanel.add(label_1);
       textField.setEditable(false);
       
@@ -134,7 +137,7 @@ class Board_show extends JFrame{
       textField_2.setEditable(false);
       
       textField_2.setColumns(10);
-      textField_2.setBounds(535, 11, 167, 26);
+      textField_2.setBounds(535, 8, 167, 26);
       mainPanel.add(textField_2);
       //DS list의 5인덱스(날짜)를 필드에 채움
       textField_2.setText((String)list.get(5));
@@ -161,15 +164,17 @@ class Board_show extends JFrame{
       JScrollPane scroll_1 = new JScrollPane(textArea_2);
       scroll_1.setBounds(12, 371, 690, 130);
       mainPanel.add(scroll_1);
-      textArea_3.setEditable(false);
-      
-      
-      textArea_3.setBounds(720,30,240,500);
-      mainPanel.add(textArea_3);
       
       
       edit_button.setBounds(605, 511, 97, 45);
       mainPanel.add(edit_button);
+     
+      ic  = new ImageIcon("property/googlead.png");
+      JLabel ad_sense = new JLabel();
+      ad_sense.setIcon(ic);
+      ad_sense.setBounds(716, 42, 257, 514);
+      
+      mainPanel.add(ad_sense);
    }
 
    private void event() {
@@ -178,7 +183,11 @@ class Board_show extends JFrame{
       
       //DS 삭제 버튼을 눌렀을 때 이벤트 설정
       edit_button.addActionListener(e->{
-    	  Board_main bm = new Board_main(number);
+    	  System.out.println(list.get(4).toString() + userid +"를비교한다" );
+    	  if(list.get(4).toString().equals(userid)){
+    		  Board_main bm = new Board_main(number);
+    	  }else
+    		  JOptionPane.showMessageDialog(this, "해당 게시물의 등록자가 아닙니다", "수정불가", JOptionPane.INFORMATION_MESSAGE);
       });
       
    }

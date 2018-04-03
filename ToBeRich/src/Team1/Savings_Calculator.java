@@ -134,7 +134,7 @@ public class Savings_Calculator {
 				}
 			}
 			for(int i=0;i<use_val.length;i++){
-				result[0] += use_val[i][0]+",";
+				result[0] += use_val[i][0]+"("+use_val[i][2]+"%)"+" (월 "+use_val[i][1]+"원)"+",";
 			}
 			result[1]= Integer.toString(CNT);
 			
@@ -186,9 +186,9 @@ public class Savings_Calculator {
 				}
 			}
 			for(int i=0;i<use_val.length;i++){
-				result[0] +=  use_val[i][0]+",";
+				result[0] += use_val[i][0]+"("+use_val[i][2]+"%)"+" (월 "+use_val[i][1]+"원)"+",";
 			}
-			result[0]+= "+ 월 "+justsave+"원의 저금";
+			result[0]+= justsave+"원 저금.";
 			result[1]= Integer.toString(CNT);
 			
 			System.out.println(result[0] );

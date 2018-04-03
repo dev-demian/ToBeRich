@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,26 +31,25 @@ class Main_Form extends JFrame {
    private JPanel mainPanel = new JPanel();
    
    private String name = "멍청이";
-   
-   private JButton profile = new JButton("프로필");
    private JLabel user = new JLabel(name + "님", JLabel.CENTER);
    private JButton simulation = new JButton("시뮬레이션");
    private JButton userInformation = new JButton("정보수정");
    private JButton logout = new JButton("로그아웃");
    private JLabel title = new JLabel("< 게시판 >");
    private Font font = new Font("", Font.PLAIN, 30);
-  
- 
-   
    private final JTable table = new JTable();
    User thisuser;
+   ImageIcon ic;
+  
+   
+   
    
    
    //main에 하던 설정들을 생성자에서 진행
    public Main_Form( User target_user) {
 	  this.thisuser = target_user;
 	  user.setText(this.thisuser.getName());
-      this.display();//화면 구성 관련 처리
+	  this.display();//화면 구성 관련 처리
       this.event();//이벤트 관련 처리
       this.menu();//메뉴 관련 처리
       
@@ -67,8 +67,7 @@ class Main_Form extends JFrame {
       this.setContentPane(mainPanel);
       //모든 컴포넌트의 추가는 mainPanel에 수행
       mainPanel.setLayout(null);
-      //위치와 사이즈설정
-      profile.setBounds(28, 18, 130, 128);
+      
       user.setBounds(28,160,106,50);
       userInformation.setBounds(40, 220, 106, 50);
       logout.setBounds(40, 310, 106, 50);
@@ -78,9 +77,6 @@ class Main_Form extends JFrame {
       title.setFont(font);
       //색상설정 
       mainPanel.setBackground(Color.WHITE);
-      profile.setBackground(Color.pink);
-      //보여주기
-      mainPanel.add(profile);
       mainPanel.add(user);
       mainPanel.add(simulation);
       mainPanel.add(userInformation);
@@ -127,6 +123,17 @@ class Main_Form extends JFrame {
       pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       mainPanel.add(pane);
       pane.setBounds(190, 68, 770, 469);
+      if(this.thisuser.getSex().equals("남자")){		// 남자 여자 아이콘 적용 
+     	   ic  = new ImageIcon("property/male.png");
+     	  
+       }else{
+     	   ic  = new ImageIcon("property/female.png");
+       }
+     
+      JLabel iconimg = new JLabel();
+      iconimg.setIcon(ic);
+      iconimg.setBounds(28, 32, 130, 128);
+      mainPanel.add(iconimg);
       //테이블 정렬
       DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
       renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -186,7 +193,7 @@ class Main_Form extends JFrame {
 //             for(int i = 0; i < colCount; i++) {
                  //System.out.println(table.getValueAt(row, col));
              	//게시물을 클릭했을 때 게시물 번호를 Board_main에 전달하고 Board_main폼이 뜬다
-                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()));
+                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()),thisuser.getId().toString());
 //             }
              //값가져오기
 //             System.out.println(table.getValueAt(row, col));
