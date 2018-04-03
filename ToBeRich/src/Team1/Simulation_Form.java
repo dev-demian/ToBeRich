@@ -190,8 +190,8 @@ public class Simulation_Form extends JFrame {
 		   System.out.println(total_money);
 		   Savings_Calculator SC = new Savings_Calculator(val,total_money);
 		   SC.sort();
-		   SC.Calculate();
-//		   Simulation_Result SRcall = new Simulation_Result();   
+		   String[] resultstr = SC.Calculate();
+		   Simulation_Result SRcall = new Simulation_Result(resultstr);   
       });
    } 
    

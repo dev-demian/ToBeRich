@@ -32,13 +32,15 @@ public class Simulation_Result extends JFrame {
    JLabel lblNewLabel_4 = new JLabel("\uCD1D \uAE30\uAC04");
    JLabel lblNewLabel_6 = new JLabel("\uB0A0\uC9DC");
    JPanel panel_4 = new JPanel();
-   JTextArea textArea = new JTextArea();
-   JFormattedTextField formattedTextField = new JFormattedTextField();
-   JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-   JFormattedTextField formattedTextField_2 = new JFormattedTextField();
    JPanel panel_2 = new JPanel();
    JLabel lblNewLabel_2 = new JLabel("                                ");
-
+   private final JLabel used_savings = new JLabel("");
+   private final JLabel benefit = new JLabel("");
+   private final JLabel total_term = new JLabel("");
+   private final JLabel expected_date = new JLabel("");
+   
+   
+   String[] resultstr;
    /**
     * Launch the application.
     */
@@ -58,7 +60,9 @@ public class Simulation_Result extends JFrame {
    /**
     * Create the frame.
     */
-   public Simulation_Result() {
+   public Simulation_Result(String[] resultstr) {
+	  this.resultstr = resultstr;
+	  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 480, 320);
       contentPane = new JPanel();
@@ -71,6 +75,9 @@ public class Simulation_Result extends JFrame {
       
    } 
    private void display() {
+	     used_savings.setText(resultstr[0].substring(4));// 앞에 null이 포함되서 4번째 인덱스부터 출력하기 시작 
+	     total_term.setText(Integer.toString((Integer.parseInt(resultstr[1])*12))+" 개월");
+	     
          contentPane.add(panel, BorderLayout.NORTH);
          
          panel.add(lblNewLabel);
@@ -95,13 +102,13 @@ public class Simulation_Result extends JFrame {
          panel_1.add(panel_4);
          panel_4.setLayout(new GridLayout(4, 0, 0, 0));
          
-         panel_4.add(textArea);
+         panel_4.add(used_savings);
          
-         panel_4.add(formattedTextField);
+         panel_4.add(benefit);
          
-         panel_4.add(formattedTextField_1);
+         panel_4.add(total_term);
          
-         panel_4.add(formattedTextField_2);
+         panel_4.add(expected_date);
          
          contentPane.add(panel_2, BorderLayout.SOUTH);
                  
