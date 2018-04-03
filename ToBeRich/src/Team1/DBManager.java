@@ -218,6 +218,7 @@ public class DBManager {
 		
 		//table에 넣어주기 
 		Object[][] data = new Object[x][y];
+		
 		int data_x=0;
 		for(Entry<String, Savings> m : savingsinfo.entrySet()){//data에 값을 넣어주기 위한 foreach문
 			

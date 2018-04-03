@@ -177,7 +177,8 @@ public class Savings_Calculator {
 				for(int i=0;i<use_val.length;i++){//출력
 					goal -= Integer.parseInt(use_val[i][3]);
 				}
-				goal -= justsave;  // 기본 저금도 따로 빼줘야 한다 
+				goal -= justsave*12;  // 기본 저금도 따로 빼줘야 한다 
+				
 				CNT++;
 				if(goal<0){
 					System.out.println("총 "+CNT+"년이 걸립니다.");
