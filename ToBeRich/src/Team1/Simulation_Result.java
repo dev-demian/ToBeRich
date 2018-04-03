@@ -22,6 +22,7 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 public class Simulation_Result extends JFrame {
 
@@ -34,7 +35,7 @@ public class Simulation_Result extends JFrame {
    JLabel lblNewLabel_1 = new JLabel("         ");
    JPanel panel_1 = new JPanel();
    JPanel panel_3 = new JPanel();
-   JLabel lblNewLabel_3 = new JLabel("\uC0C1\uD488");
+   JLabel lblNewLabel_3 = new JLabel("\uC801\uC6A9 \uC0C1\uD488(\uC774\uC728)");
    JLabel lblNewLabel_4 = new JLabel("\uCD1D \uAE30\uAC04");
    JLabel lblNewLabel_6 = new JLabel("\uD658\uAE09 \uC608\uC815\uC77C");
    JPanel panel_4 = new JPanel();
@@ -48,6 +49,7 @@ public class Simulation_Result extends JFrame {
    File file;//스샷
    String[] resultstr;
    private final JTextArea TA_used_savings = new JTextArea();
+   private final JLabel L_user_name = new JLabel(" ");
    /**
     * Launch the application.
     */
@@ -80,14 +82,18 @@ public class Simulation_Result extends JFrame {
 	    int index =1;
 	    for(String cha : array){      //배열 갯수만큼 포문이 돌아간다.
 	 
-	    	TA_used_savings.append(index+"등 : "+cha+" \n");
+	    	TA_used_savings.append("     "+index+"등 : "+cha+" \n");
 	    	index++;
 	    }
-
-
-	
+	    
 //	  TA_used_savings.setText();
 	  L_month.setText(Integer.toString((Integer.parseInt(this.resultstr[1])*12))+" 개월");
+	  Cul_date Cd = new Cul_date(Integer.parseInt(this.resultstr[1])*12);
+	  L_date.setHorizontalAlignment(SwingConstants.CENTER);
+	  
+	  L_date.setText(Cd.returndate());
+	  L_user_name.setText(userid+"님  ");
+	  
 	  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 480, 320);
@@ -104,6 +110,8 @@ public class Simulation_Result extends JFrame {
 	     
          contentPane.add(panel, BorderLayout.NORTH);
          
+         panel.add(L_user_name);
+         
          panel.add(lblNewLabel);
          
          panel.add(lblNewLabel_1);
@@ -116,7 +124,7 @@ public class Simulation_Result extends JFrame {
          panel_1.add(panel_3);
          panel_3.setLayout(null);
          lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-         lblNewLabel_3.setBounds(0, 12, 137, 47);
+         lblNewLabel_3.setBounds(0, 12, 137, 75);
          
          panel_3.add(lblNewLabel_3);
          lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -135,17 +143,15 @@ public class Simulation_Result extends JFrame {
          JScrollPane scrollPane = new JScrollPane();
          scrollPane.setBounds(0, 0, 315, 99);
          panel_4.add(scrollPane);
-         TA_used_savings.setBackground(Color.WHITE);
+         TA_used_savings.setBackground(UIManager.getColor("CheckBox.background"));
          TA_used_savings.setEditable(false);
          
          scrollPane.setViewportView(TA_used_savings);
          
          L_month.setHorizontalAlignment(SwingConstants.CENTER);
-         L_month.setBounds(120, 111, 62, 18);
+         L_month.setBounds(0, 100, 315, 41);
          panel_4.add(L_month);
-         
-         L_date.setHorizontalAlignment(SwingConstants.CENTER);
-         L_date.setBounds(120, 159, 62, 18);
+         L_date.setBounds(0, 141, 315, 48);
          panel_4.add(L_date);
          
          contentPane.add(panel_2, BorderLayout.SOUTH);
