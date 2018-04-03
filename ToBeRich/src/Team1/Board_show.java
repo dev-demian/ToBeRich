@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-class Board_show extends JFrame{
+class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감 
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
    JPanel mainPanel = new JPanel();
    JLabel lblNewLabel = new JLabel("제목");
@@ -50,12 +50,15 @@ class Board_show extends JFrame{
    //DS 클릭한 게시물의 map데이터를 가져와 갱신할 map,list생성
    private Map<Integer,List<Object>> map = new HashMap<>();
    private List<Object> list = new ArrayList();
+   String userid;//해당 유저만 수정 삭제폼을 불러오기위한 구분자
+   
    
    
    //main에 하던 설정들을 생성자에서 진행
-   public Board_show(int number) {
+   public Board_show(int number,String userid) {
 	   //DS 생성자에서 게시물 번호를 전달 받아 number변수에 저장한다
 	  this.number = number;
+	  this.userid= userid;
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
 	  try{
 		  //DS DB에서 읽어오는 스트림 생성
@@ -178,7 +181,11 @@ class Board_show extends JFrame{
       
       //DS 삭제 버튼을 눌렀을 때 이벤트 설정
       edit_button.addActionListener(e->{
-    	  Board_main bm = new Board_main(number);
+    	  System.out.println(list.get(4).toString() + userid +"를비교한다" );
+    	  if(list.get(4).toString().equals(userid)){
+    		  Board_main bm = new Board_main(number);
+    	  }else
+    		  JOptionPane.showMessageDialog(this, "해당 게시물의 등록자가 아닙니다", "수정불가", JOptionPane.INFORMATION_MESSAGE);
       });
       
    }

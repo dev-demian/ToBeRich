@@ -193,7 +193,7 @@ class Main_Form extends JFrame {
 //             for(int i = 0; i < colCount; i++) {
                  //System.out.println(table.getValueAt(row, col));
              	//게시물을 클릭했을 때 게시물 번호를 Board_main에 전달하고 Board_main폼이 뜬다
-                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()));
+                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()),thisuser.getId().toString());
 //             }
              //값가져오기
 //             System.out.println(table.getValueAt(row, col));
