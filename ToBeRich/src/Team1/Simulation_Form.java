@@ -35,7 +35,7 @@ public class Simulation_Form extends JFrame {
    JButton button = new JButton("\uACC4\uC0B0\uD558\uAE30");
    private final JScrollPane scrollPane = new JScrollPane();
    private final JTable table = new JTable();
-   
+   String userid;
    Object[][] data;
    /**
     * Launch the application.
@@ -56,7 +56,8 @@ public class Simulation_Form extends JFrame {
    /**
     * Create the frame.
     */
-   public Simulation_Form() {
+   public Simulation_Form(String userid) {
+	   this.userid=userid;
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 1000, 750);
       contentPane = new JPanel();
@@ -194,7 +195,7 @@ public class Simulation_Form extends JFrame {
 		   Savings_Calculator SC = new Savings_Calculator(val,total_money);
 		   SC.sort();
 		   String[] resultstr = SC.Calculate();
-		   Simulation_Result SRcall = new Simulation_Result(resultstr);   
+		   Simulation_Result SRcall = new Simulation_Result(resultstr,userid);   
       });
    } 
    

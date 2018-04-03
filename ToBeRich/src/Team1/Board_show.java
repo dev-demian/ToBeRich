@@ -25,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-class Board_main extends JFrame{
+class Board_show extends JFrame{
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
    JPanel mainPanel = new JPanel();
    JLabel lblNewLabel = new JLabel("제목");
@@ -39,8 +39,7 @@ class Board_main extends JFrame{
    JTextArea textArea_1 = new JTextArea();
    JTextArea textArea_2 = new JTextArea();
    JTextArea textArea_3 = new JTextArea();
-   JButton btnNewButton = new JButton("수정");
-   JButton button = new JButton("삭제");
+   JButton edit_button = new JButton("\uC218\uC815/\uC0AD\uC81C");
    //DS DB경로 생성
    private File target = new File("DB","board.txt");
    private Image img = null;
@@ -54,7 +53,7 @@ class Board_main extends JFrame{
    
    
    //main에 하던 설정들을 생성자에서 진행
-   public Board_main(int number) {
+   public Board_show(int number) {
 	   //DS 생성자에서 게시물 번호를 전달 받아 number변수에 저장한다
 	  this.number = number;
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
@@ -117,12 +116,14 @@ class Board_main extends JFrame{
       label_1.setFont(new Font("굴림", Font.PLAIN, 14));
       label_1.setBounds(495, 10, 28, 21);
       mainPanel.add(label_1);
+      textField.setEditable(false);
       
       
       textField.setBounds(47, 11, 145, 26);
       mainPanel.add(textField);
       //DS list의 0인덱스(제목)를 필드에 채움
       textField.setText((String)list.get(0));
+      textField_1.setEditable(false);
       
       
       textField_1.setColumns(10);
@@ -130,6 +131,7 @@ class Board_main extends JFrame{
       mainPanel.add(textField_1);
       //DS Main_Form에서 받은 게시판 번호(number)를 필드에 채움
       textField_1.setText(String.valueOf(number));
+      textField_2.setEditable(false);
       
       textField_2.setColumns(10);
       textField_2.setBounds(535, 11, 167, 26);
@@ -140,6 +142,7 @@ class Board_main extends JFrame{
       //DS 이미 생성자에서 만든 이미지를 담고 있는 imgLabel변수를 폼의 위치에 설정한다
       imgLabel.setBounds(12, 41, 481, 320);
       mainPanel.add(imgLabel);
+      textArea_1.setEditable(false);
       
       
       textArea_1.setBounds(505, 41, 197, 320);
@@ -149,6 +152,7 @@ class Board_main extends JFrame{
       JScrollPane scroll = new JScrollPane(textArea_1);
       scroll.setBounds(505, 41, 197, 320);
       mainPanel.add(scroll);
+      textArea_2.setEditable(false);
       
       
       textArea_2.setBounds(12, 371, 690, 130);
@@ -157,69 +161,24 @@ class Board_main extends JFrame{
       JScrollPane scroll_1 = new JScrollPane(textArea_2);
       scroll_1.setBounds(12, 371, 690, 130);
       mainPanel.add(scroll_1);
+      textArea_3.setEditable(false);
       
       
       textArea_3.setBounds(720,30,240,500);
       mainPanel.add(textArea_3);
-      //textArea_3.setText("광고"); //광고 내용이 담길 공간
-      
-      btnNewButton.setBounds(500, 511, 97, 45);
-      mainPanel.add(btnNewButton);
       
       
-      button.setBounds(605, 511, 97, 45);
-      mainPanel.add(button);
+      edit_button.setBounds(605, 511, 97, 45);
+      mainPanel.add(edit_button);
    }
 
    private void event() {
       //setDefaultCloseOperation(EXIT_ON_CLOSE);
       setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-      //setDefaultCloseOperation(HIDE_ON_CLOSE);
-      //setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//JFrame 기본 이벤트 방지
-      
-      //DS 수정 버튼을 눌렀을 때 이벤트 설정
-      btnNewButton.addActionListener(e->{
-    	  //DS 비번 입력창을 띄운다
-    	  String pw = JOptionPane.showInputDialog(null,"게시물 비번을 입력해주세요");
-    	  //DS DB에 저장 되어 있는 비번과 입력 받은 비번이 일치하면 수정 완료 메시지창 띄우고 해당 폼 닫기
-    	  if(list.get(1).equals(pw)) {
-    		  //DS BoardControl 객체 생성
-    		  BoardControl bc = new BoardControl();
-    		  //DS BoardControl 내의 updateSet(수정기능) 메소드를 호출하며 field와 area에 입력한 데이터를 전달한다
-    		  bc.updateSet(map,number,textField.getText(),textArea_1.getText());
-    		  //DS 완료 확인창을 띄운다
-    		  JOptionPane.showMessageDialog(null,"게시물 수정 완료");
-    		  //DS 해당 폼을 종료한다
-    		  dispose();
-          //DS 비번 입력창에서 취소 버튼을 누르면 비번 입력창 닫기
-    	  }else if(pw == null) {
-    		  //DS 아무른 이벤트 없음
-    	  //DS 입력한 비번이 불일치하면 오류 메시지창을 띄운다
-    	  }else if(list.get(1) != (pw)) {
-    		  JOptionPane.showMessageDialog(null, "오류", "오류", JOptionPane.ERROR_MESSAGE);
-    	  }
-      });
       
       //DS 삭제 버튼을 눌렀을 때 이벤트 설정
-      button.addActionListener(e->{
-    	  //DS 비번 입력창을 띄운다
-    	  String pw = JOptionPane.showInputDialog(null,"게시물 비번을 입력해주세요");
-    	  //DS DB에 저장 되어 있는 비번과 입력 받은 비번이 일치하면 수정 완료 메시지창 띄우고 해당 폼 닫기
-    	  if(list.get(1).equals(pw)) {
-    		//DS BoardControl 객체 생성
-    		BoardControl bc = new BoardControl();
-    		//DS BoardControl 내의 delete(게시물 삭제 기능) 메소드 호출이며 전달 데이터로는 최신 갱신 map,게시물 번호,해당 이미지 경로가 있다
-    		bc.delete(map,number,imgPath);
-    		//DS 완료 확인창을 띄운다
-    		JOptionPane.showMessageDialog(null,"게시물 삭제 완료");
-  		  	//DS 해당 폼을 종료한다
-  		  	dispose();
-    	  }else if(pw == null) {
-    		  //DS 아무른 이벤트 없음
-    	  //DS 입력한 비번이 불일치하면 오류 메시지창을 띄운다
-    	  }else if(list.get(1) != (pw)) {
-    		  JOptionPane.showMessageDialog(null, "오류", "오류", JOptionPane.ERROR_MESSAGE);
-    	  }
+      edit_button.addActionListener(e->{
+    	  Board_main bm = new Board_main(number);
       });
       
    }

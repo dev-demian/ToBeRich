@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,10 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 class Main_Form extends JFrame {
 //   배치할 구성요소(컴포넌트)를 멤버필드로 구현한 뒤 사용
@@ -33,16 +38,10 @@ class Main_Form extends JFrame {
    private JButton logout = new JButton("로그아웃");
    private JLabel title = new JLabel("< 게시판 >");
    private Font font = new Font("", Font.PLAIN, 30);
-   private int count = 0;
-   private String[] header = new String[] { "번호", "제목", "이름", "날자", "조회수" };
-   private Object[][] data = {
-         { 1, "제목1", "철수", "2018-03-22", count },
-         { 2, "제목2", "영희", "2018-03-23", count },
-         { 3, "제목3", "짱구", "2018-03-24", count },
-         { 4, "제목4", "짱아", "2018-03-25", count },
-         { 5, "제목5", "배기태", "2018-03-26", count }
-   };
-   private JTable table;
+  
+ 
+   
+   private final JTable table = new JTable();
    User thisuser;
    
    
@@ -87,17 +86,42 @@ class Main_Form extends JFrame {
       mainPanel.add(userInformation);
       mainPanel.add(logout);
       mainPanel.add(title);
+//      BoardControl BC불러서 Object[][] 받아오고  data
+//      Object[][] data = BC.calltable();
+     
+      BoardControl BC = new BoardControl();
+      Object[][] data = BC.calltable();
+      
+      String[] header =  new String[] {
+        		"\uBC88\uD638", "\uC81C\uBAA9", "\uC774\uB984", "\uB0A0\uC790", "\uC870\uD68C\uC218"
+        	};
       //S : 테이블
       DefaultTableModel model = new DefaultTableModel(data, header) {
          @Override
-         public boolean isCellEditable(int row, int col) {
-            return false;
-         }
+        public Class<?> getColumnClass(int columnIndex) {
+        	// TODO Auto-generated method stub
+        	 switch(columnIndex){
+        	 case 0: return Integer.class;
+        	 case 1: return String.class;
+        	 case 2: return String.class;
+        	 case 3: return String.class;//날짜
+        	 case 4: return Integer.class;
+     		 
+     		 
+     		 }
+     		return Object.class;
+        }
       };
-      table = new JTable(model);
-      JTableHeader header = table.getTableHeader();   //배경색을 바꾸기위한 코드
-      header.setBackground(Color.yellow);
+     
+      
+     
+      table.setModel(model);
+      
+      
       JScrollPane pane = new JScrollPane(table);
+     
+      
+      pane.getViewport().setBackground(Color.WHITE);
       //스크롤설정
       pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
       pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -106,21 +130,19 @@ class Main_Form extends JFrame {
       //테이블 정렬
       DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
       renderer.setHorizontalAlignment(SwingConstants.CENTER);
-      TableColumnModel columnModel = table.getColumnModel();
-      for(int i=0; i<columnModel.getColumnCount(); i++) {
-         columnModel.getColumn(i).setCellRenderer(renderer);
-      }
+      
       //테이블 width값 설정
-      table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+     
+//      table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
       table.getColumnModel().getColumn(0).setPreferredWidth(34);
       table.getColumnModel().getColumn(1).setPreferredWidth(400);
       table.getColumnModel().getColumn(2).setPreferredWidth(100);
       table.getColumnModel().getColumn(3).setPreferredWidth(130);
       table.getColumnModel().getColumn(4).setPreferredWidth(88);
       //테이블 이동불가
-      table.getTableHeader().setReorderingAllowed(false);
+//      table.getTableHeader().setReorderingAllowed(false);
       //테이블 크기 조절 불가
-      table.getTableHeader().setResizingAllowed(false);
+//      table.getTableHeader().setResizingAllowed(false);
       //마우스이벤트
       //F : 테이블
    }
@@ -132,28 +154,56 @@ class Main_Form extends JFrame {
 //      this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);//기본 이벤트 방지
       
       simulation.addActionListener(e->{
-         //시뮬레이션 폼 호출
-         Simulation_Form callSF = new Simulation_Form();
+         //시뮬레이션 폼 호출 사용자 정보 넣어주기 
+    	 String userid = thisuser.getId();
+         Simulation_Form callSF = new Simulation_Form(userid);
       });
       
       
-      //마우스클릭 이벤트
-      class MouseListener extends MouseAdapter {
+//      //마우스클릭 이벤트
+//      class MouseListener extends MouseAdapter {
+//          @Override
+//          public void mouseClicked(MouseEvent e) {
+//             if (e.getButton() == 1) {
+//               int row = table.getSelectedRow();
+//               int col = table.getSelectedColumn();
+//               System.out.println(row + "행");
+//             } //클릭
+//   //          if (e.getClickCount() == 2) { } // 더블클릭
+//   //          if (e.getButton() == 3) { } // 오른쪽 클릭
+//          }
+//      }
+     
+      table.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
-             if (e.getButton() == 1) {
-               int row = table.getSelectedRow();
-               int col = table.getSelectedColumn();
-               System.out.println(row + "행");
-             } //클릭
-   //          if (e.getClickCount() == 2) { } // 더블클릭
-   //          if (e.getButton() == 3) { } // 오른쪽 클릭
+             int row = table.getSelectedRow();
+             int col = table.getSelectedColumn();
+             int rowCount = table.getSelectedRowCount();
+//             System.out.println(table.getValueAt(row, 0));
+             
+//             int colCount = table.getColumnCount();
+//             for(int i = 0; i < colCount; i++) {
+                 //System.out.println(table.getValueAt(row, col));
+             	//게시물을 클릭했을 때 게시물 번호를 Board_main에 전달하고 Board_main폼이 뜬다
+                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()));
+//             }
+             //값가져오기
+//             System.out.println(table.getValueAt(row, col));
           }
-      }
-      table.addMouseListener(new MouseListener());
+       });
+      
+      //로그아웃
+      logout.addActionListener(event -> {
+         dispose();
+         this.thisuser = null;
+         LogIn LP = new LogIn();
+      });
+      
    }
    private void menu() {}
 }
+
 
 
 
