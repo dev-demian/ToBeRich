@@ -85,12 +85,14 @@ public class Simulation_Form extends JFrame {
          }catch(Exception e){
         	 e.printStackTrace();
          }
+         
          String[] c_name = new String[] {
           		"\uC0C1\uD488\uC120\uD0DD", "        \uC801  \uAE08  \uC0C1  \uD488  \uBA85", "\uC740\uD589\uBA85", "\uAE30\uAC04(\uC6D4)", "\uCD5C\uB300\uB0A9\uC785\uAC00\uB2A5\uAE08\uC561", "\uC774\uC790\uC801\uC6A9\uBC29\uC2DD", "\uAE30\uBCF8\uAE08\uB9AC", "\uC6B0\uB300\uAE08\uB9AC", "\uC6B0\uB300\uC801\uC6A9"
           	};//컬럽명을 담당하는 string[]
          
          //custom Tabel클래스 (DefaultTableModel사용하기 위해 일단 보류)
          //CustomTable CT = new CustomTable(data,c_name);
+         
          DefaultTableModel model = new DefaultTableModel(data,new String[] {
           		"\uC0C1\uD488\uC120\uD0DD", "        \uC801  \uAE08  \uC0C1  \uD488  \uBA85", "\uC740\uD589\uBA85", "\uAE30\uAC04(\uC6D4)", "\uCD5C\uB300\uB0A9\uC785\uAC00\uB2A5\uAE08\uC561", "\uC774\uC790\uC801\uC6A9\uBC29\uC2DD", "\uAE30\uBCF8\uAE08\uB9AC", "\uC6B0\uB300\uAE08\uB9AC", "\uC6B0\uB300\uC801\uC6A9"
           	}
@@ -154,12 +156,13 @@ public class Simulation_Form extends JFrame {
 		   int t_row = table.getRowCount();
 		   int t_column = table.getColumnCount();
 		   int val_row=0;
+		   
 		   for (int j = 0; j  < t_row; j++) {			// 앞에가 True면 
 			   if((Boolean)table.getValueAt(j,0)){
 				   val_row++;							// 선택된 개수만큼val의 row인덱스 카운팅
-				   for (int i = 0; i  < t_column; i++) {
+//				   for (int i = 0; i  < t_column; i++) {
 //			           System.out.println(table.getValueAt(j, i));  //테이블 전체 출력
-			       }
+//			       }
 			   }
 		   }
 //		   System.out.println(val_row);
