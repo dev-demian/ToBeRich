@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -46,7 +47,8 @@ public class JoinPage extends JFrame {
    private JRadioButton sexcheck_man;
    private JRadioButton sexcheck_woman;
    private JButton overlap_id;
-
+   private boolean IDcheck = false;
+   private boolean Overlap_check = false;
 //   /**
 //    * Launch the application.
 //    */
@@ -83,33 +85,51 @@ public class JoinPage extends JFrame {
    }
 
    private void event() {
-	   overlap_id.addActionListener(e->{                              // 중복확인 버튼. 
-         Pattern pattern = Pattern.compile("^[A-Za-z]{1}[A-Za-z0-9]{3,19}$");   //아이디 조건 
+      overlap_id.addActionListener(e->{                              // 중복확인 버튼. 
+         
+       Pattern pattern = Pattern.compile("^[A-Za-z]{1}[A-Za-z0-9]{3,19}$");   //아이디 조건 
          Matcher match = pattern.matcher(ID.getText());   
          
          if(match.matches()){      //아이디 조건문
             System.out.println("맞음");
+            String id = ID.getText();
             
-         }else
-            System.out.println("s");
+            try {
+            	DBManager dbm = new DBManager();
+            	IDcheck = dbm.overLap(id);
+//          dispose();
+            } catch (Exception err) {
+            	err.printStackTrace();
+            }
+            
+            if(IDcheck) {
+            	JOptionPane.showMessageDialog(this, "가입가능한 아이디 입니다", "중복확인", JOptionPane.INFORMATION_MESSAGE);
+            	Overlap_check = true;
+            }else {
+            	JOptionPane.showMessageDialog(this, "이미 가입되 있는 아이디 입니다.", "중복확인", JOptionPane.INFORMATION_MESSAGE);
+            }
+         }else{
+        	 JOptionPane.showMessageDialog(this, "사용 가능한 ID값을 입력하세요(영문,숫자 3자이상)", "아이디 확인", JOptionPane.INFORMATION_MESSAGE);
+        	 System.out.println("s");
+         }
       });
       
       join_button.addActionListener(e->{                                 //가입버튼
-    	
-    	Pattern pwd_pattern = Pattern.compile("[a-z0-9]{6,15}"); // 비밀번호 조건 정규식
-      	char[] jtemp_pwd = pw_textfield.getPassword();
-      	String changestr="";
-      	for(int i=0; i<pw_textfield.getPassword().length;i++) {
-      		changestr += Character.toString(jtemp_pwd[i]);
-      	}
-      	Matcher pwd_match = pwd_pattern.matcher(changestr);
-      	
-    	if(pwd_match.matches()){							//패스워드 정규식 확인
-    		System.out.println("비밀번호 저장 가능");
-    	}else
-    		System.out.println("비밀번호 부적합");
-    	
-    	 char[] pwd = pw_textfield.getPassword();
+       
+       Pattern pwd_pattern = Pattern.compile("[a-z0-9]{6,15}"); // 비밀번호 조건 정규식
+         char[] jtemp_pwd = pw_textfield.getPassword();
+         String changestr="";
+         for(int i=0; i<pw_textfield.getPassword().length;i++) {
+            changestr += Character.toString(jtemp_pwd[i]);
+         }
+         Matcher pwd_match = pwd_pattern.matcher(changestr);
+         
+       if(pwd_match.matches()){                     //패스워드 정규식 확인
+          System.out.println("비밀번호 저장 가능");
+       }else
+          System.out.println("비밀번호 부적합");
+       
+        char[] pwd = pw_textfield.getPassword();
          char[] pwd1 = pw_textfield.getPassword();
 //         System.out.println(pwd);
 //         System.out.println(pwd1);
@@ -131,7 +151,7 @@ public class JoinPage extends JFrame {
          else if(sexcheck_woman.isSelected())
             System.out.println("여자");
          else
-        	 System.out.println("체크해야함");
+            System.out.println("체크해야함");
 //         
          Pattern pattern2 = Pattern.compile("^[_ a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$");
          Matcher match2 = pattern2.matcher(email_textfield.getText());
@@ -141,56 +161,61 @@ public class JoinPage extends JFrame {
          else
             System.out.println("이메일불가");
          
+         if(!(Overlap_check)) {
+            JOptionPane.showMessageDialog(this, "중복확인을 해주세요.", "중복확인", JOptionPane.INFORMATION_MESSAGE);
+         }
+        
          
-         if(pwd_match.matches()&&Arrays.equals(pwd, pwd1)&&match1.matches()&&(sexcheck_man.isSelected()||sexcheck_woman.isSelected())&&match2.matches()){
-        	 
-         	String fid = ID.getText(); 
-         	char[] temp_pwd = pw_textfield.getPassword();
-          	String change="";
-          	for(int i=0; i<pw_textfield.getPassword().length;i++) {
-          		change += Character.toString(temp_pwd[i]);
-          	}
-          	String fpwd = change;
-         	String fname = name.getText();
-         	String fsex = null;
-         	 if(sexcheck_man.isSelected())                       
+         if(IDcheck && pwd_match.matches()&&Arrays.equals(pwd, pwd1)&&match1.matches()&&(sexcheck_man.isSelected()||sexcheck_woman.isSelected())&&match2.matches()){
+            
+            String fid = ID.getText(); 
+            char[] temp_pwd = pw_textfield.getPassword();
+             String change="";
+             for(int i=0; i<pw_textfield.getPassword().length;i++) {
+                change += Character.toString(temp_pwd[i]);
+             }
+             String fpwd = change;
+            String fname = name.getText();
+            String fsex = null;
+             if(sexcheck_man.isSelected())                       
                   fsex = "남자";
                else if(sexcheck_woman.isSelected())
                   fsex = "여자";
                else
-              	fsex = null;
-         	
-         	String femail = email_textfield.getText();
-         	 
-         	User user = new User(fid,fpwd,fname,fsex,femail);
-//         	System.out.println(fid+fpwd+fname+fsex+femail);
-//         	System.out.println(user.getId()+user.getName()+user.getEmail()+user.getPwd()+user.getSex());
-         	
-         	try {
-         		DBManager DBM = new DBManager();
-     			DBM.signup(fid,user);//첫가입시 이거 주석처리하고 
-     			dispose();
-     			
-     		} catch (Exception e1) {
-     			// TODO Auto-generated catch block
-     			e1.printStackTrace();
-     		}
+                 fsex = null;
+            
+            String femail = email_textfield.getText();
+             
+            User user = new User(fid,fpwd,fname,fsex,femail);
+//            System.out.println(fid+fpwd+fname+fsex+femail);
+//            System.out.println(user.getId()+user.getName()+user.getEmail()+user.getPwd()+user.getSex());
+            
+            try {
+               DBManager DBM = new DBManager();
+              DBM.signup(fid,user);//첫가입시 이거 주석처리하고 
+              dispose();
+              
+           } catch (Exception e1) {
+              // TODO Auto-generated catch block
+              e1.printStackTrace();
+           }
           }else
-         	 System.out.println("조건 만족하지 않았습니다 다시 입력해주세요");
+             System.out.println("조건 만족하지 않았습니다 다시 입력해주세요");
+      
       });
 
      
       
       cancel_button.addActionListener(e->{
          //dispose
-    	  try {
-  			DBManager DBM = new DBManager();
-  			DBM.ShowUser();
-  			dispose();
-  		} catch (Exception e1) {
-  			// TODO Auto-generated catch block
-  			e1.printStackTrace();
-  		}
+         try {
+           DBManager DBM = new DBManager();
+           DBM.ShowUser();
+           dispose();
+        } catch (Exception e1) {
+           // TODO Auto-generated catch block
+           e1.printStackTrace();
+        }
       });
       
       
