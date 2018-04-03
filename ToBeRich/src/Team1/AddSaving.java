@@ -2,23 +2,20 @@ package Team1;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.Map;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import java.awt.Scrollbar;
-import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class AddSaving extends JFrame {
 
@@ -48,7 +45,14 @@ public class AddSaving extends JFrame {
    JPanel panel_3 = new JPanel();
    JButton btn_save = new JButton("\uC800\uC7A5");
    JButton btn_cancel = new JButton("\uCDE8\uC18C");
-
+   private String sname;
+   private String bname; 
+   private String term;
+   private String maxsave;
+   private String calculation;
+   private String basic_interest;
+   private String upgrade_interest;
+   private String upgrade_rate;
    /**
     * Launch the application.
     */
@@ -69,57 +73,125 @@ public class AddSaving extends JFrame {
     * Create the frame.
     */
    public AddSaving() {
-	  display();
-	  event();
-	  
+     display();
+     event();
+     
       
    }
-
+  
+   
 private void event() {
-	// TODO Auto-generated method stub
-	btn_save.addActionListener(e->{                          //ÀúÀå
-		//°ªÀ» ºÒ·¯¿À°í 
-		String sname= TF_sname.getText();//»óÇ°
-		String bname= TF_bname.getText();//ÀºÇà
-		String term= TF_term.getText();
-		String maxsave= TF_maxsave.getText();
-		String calculation= TF_calculation.getText();
-		String basic_interest= TF_basic_interest.getText();
-		String upgrade_interest= TF_upgrade_interest.getText();
-		String upgrade_rate = TF_upgrade_rate.getText();
-//		System.out.println(sname+bname+term+maxsave+calculation+basic_interest+upgrade_interest+upgrade_rate);¹Þ¾Æ¿Â °ª È®ÀÎ
-		//MapÀ¸·Î ÇÕÃÄÁÖ±â Map <String,Savings>
-		Savings savings = new Savings(sname,bname,term,maxsave,calculation,basic_interest,upgrade_interest,upgrade_rate);
-//		Map<String,Savings> map_savings = new HashMap<String,Savings>();
-//		map_savings.put(sname, savings);
-		
-		
-		try {
-			DBManager DBM = new DBManager();
-			DBM.savings_save(sname,savings);
-		} catch (Exception e1){
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-				
-	});
-	
-	btn_cancel.addActionListener(e->{
-		 try {
-	  			DBManager DBM = new DBManager();
-	  			DBM.ShowSavings();
-	  			dispose();
-	  		} catch (Exception e1) {
-	  			// TODO Auto-generated catch block
-	  			e1.printStackTrace();
-	  		}
-	});
+   // TODO Auto-generated method stub
+   btn_save.addActionListener(e->{                          //ÀúÀå
+      //°ªÀ» ºÒ·¯¿À°í 
+      
+           try {
+              Pattern sname_pattern = Pattern.compile("^[°¡-ÆRa-zA-Z0-9]{2,15}$");
+               Matcher sname_match = sname_pattern.matcher(TF_sname.getText());
+                if(sname_match.matches()) {
+                   this.sname= TF_sname.getText();//»óÇ°
+                   System.out.println("»óÇ°ÀÌ¸§ ÀúÀåµÊ");
+                }
+                else
+                   System.out.println("Æ¯¼ö¹®ÀÚ ¾²¸é ¾ÈµÊ");
+                
+               Pattern bname_pattern = Pattern.compile("¿ì¸®ÀºÇà|±¹¹ÎÀºÇà|½ÅÇÑÀºÇà|ÇÑ±¹ÅõÀÚÀúÃàÀºÇà|³óÇùÀºÇà|±â¾÷ÀºÇà");
+                Matcher bname_match = bname_pattern.matcher(TF_bname.getText());
+              
+                if(bname_match.matches()) {
+                   System.out.println("¸Â´Â ÀºÇà¸í");
+                   this.bname= TF_bname.getText();//ÀºÇà
+                }
+                else
+                    System.out.println("¿ì¸®ÀºÇà,±¹¹ÎÀºÇà,½ÅÇÑÀºÇà,ÇÑ±¹ÅõÀÚÀúÃàÀºÇà,³óÇùÀºÇà,±â¾÷ÀºÇà À¸·Î ÀÔ·ÂÇÏ¼¼¿ä");
+                
+                Pattern term_pattern = Pattern.compile("12°³¿ù");
+                Matcher term_match = term_pattern.matcher(TF_term.getText());
+                if(term_match.matches()) {
+                   this.term= TF_term.getText();
+                   System.out.println("±â°£ÀÔ·Â ¿Ï·á");
+                }
+                else {
+                   System.out.println("12°³¿ù¸¸ °¡´É");
+                }
+                   
+                Pattern maxsave_pattern = Pattern.compile("[1-9][0-9]{4,9}");
+                Matcher maxsave_match = maxsave_pattern.matcher(TF_maxsave.getText());
+                
+                if(maxsave_match.matches()) {
+                   this.maxsave= TF_maxsave.getText();
+                   System.out.println("ÃÖ´ë³³ÀÔ±Ý ÀÔ·Â¿Ï·á");
+                }
+                else
+                   System.out.println("Ã¹ÀÚ¸® 0¾ÈµÇ°í, ¸¸¿øºÎÅÍ Ãµ¸¸¿ø´ë±îÁö");
+                
+                Pattern calcul_pattern = Pattern.compile("´Ü¸®|º¹¸®");
+                Matcher calcul_match = calcul_pattern.matcher(TF_calculation.getText());
+                if(calcul_match.matches()) {
+                   this.calculation= TF_calculation.getText();
+                   System.out.println("ÀÌÀÚ¹æ½Ä ÀÔ·Â ¿Ï·á");
+                }
+                else
+                   System.out.println("´Ü¸® È¤Àº º¹¸®¸¸ ÀÔ·Â °¡´É");
+                
+                Pattern binter_pattern = Pattern.compile("[0-9]+(.[0-9])");
+                Matcher binter_match = binter_pattern.matcher(TF_basic_interest.getText());
+                if(binter_match.matches()) {
+                   this.basic_interest= TF_basic_interest.getText();
+                   System.out.println("±âº»±Ý¸® ÀÔ·Â¿Ï·á");
+                }
+                else
+                   System.out.println("¼Ò¼öÁ¡ Ã¹ÀÚ¸® ²À ÀÔ·Â");
+                   
+                Pattern upinter_pattern = Pattern.compile("[0-9]+(.[0-9])");
+                Matcher upinter_match = upinter_pattern.matcher(TF_upgrade_interest.getText());
+                
+                if(upinter_match.matches()) {
+                   this.upgrade_interest= TF_upgrade_interest.getText();
+                   System.out.println("¿ì´ë±Ý¸® ÀÔ·Â¿Ï·á");
+                }
+                else
+                   System.out.println("¼Ò¼öÁ¡ Ã¹ÀÚ¸® ²À ÀÔ·Â");
+                
+                this. upgrade_rate = TF_upgrade_rate.getText();
+                
+                if(sname_match.matches()&&bname_match.matches()&&term_match.matches()&&maxsave_match.matches()&&calcul_match.matches()&&binter_match.matches()&&upinter_match.matches()){
+                	System.out.println("Á¤±Ô½Ä Á¶°Ç ÃæÁ·ÇÏ¿© Savings.txt¿¡ ÀúÀå¸Þ¼Òµå ½ÇÇà");
+                	Savings savings = new Savings(sname,bname,term,maxsave,calculation,basic_interest,upgrade_interest,upgrade_rate);
+                	DBManager DBM = new DBManager();
+                	DBM.savings_save(sname,savings);
+                }
+                
+           	} catch (Exception e1){
+           		e1.printStackTrace();
+           		
+           	}
+       
+       
+      
+//      String bname= TF_bname.getText();//ÀºÇà
+      
+   
+      
+      
+            
+   });
+   
+   btn_cancel.addActionListener(e->{
+       try {
+              DBManager DBM = new DBManager();
+              DBM.ShowSavings();
+              dispose();
+           } catch (Exception e1) {
+              // TODO Auto-generated catch block
+              e1.printStackTrace();
+           }
+   });
 }
 
 private void display() {
-	// TODO Auto-generated method stub
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   // TODO Auto-generated method stub
+   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 450, 511);
     contentPane = new JPanel();
     contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -164,6 +236,8 @@ private void display() {
     contentPane.add(panel_2, BorderLayout.CENTER);
     panel_2.setLayout(null);
     
+    
+          
     TF_sname = new JTextField();
     TF_sname.setBounds(0, 7, 290, 24);
     TF_sname.setHorizontalAlignment(SwingConstants.LEFT);
