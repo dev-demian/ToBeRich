@@ -7,13 +7,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.FlowLayout;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class Simulation_Result extends JFrame {
@@ -40,6 +45,8 @@ public class Simulation_Result extends JFrame {
    private final JLabel expected_date = new JLabel("");
    
    
+   String userid;
+   File file;//스샷
    String[] resultstr;
    /**
     * Launch the application.
@@ -60,8 +67,9 @@ public class Simulation_Result extends JFrame {
    /**
     * Create the frame.
     */
-   public Simulation_Result(String[] resultstr) {
+   public Simulation_Result(String[] resultstr,String userid) {
 	  this.resultstr = resultstr;
+	  this.userid=userid;
 	  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 480, 320);
@@ -121,8 +129,23 @@ public class Simulation_Result extends JFrame {
       }
    
    private void event() {
+	   
+	   
       btnNewButton.addActionListener(e->{
-         Board_Edit BE = new Board_Edit();
+    	 
+    	 try {
+             //파일명 렌던으로
+             int random = (int)(Math.random()*99999);
+             Robot r = new Robot();
+             Rectangle rect = new Rectangle(this.getX(), this.getY(), 480, 320);// 좌표가 창의위치를 따라간다.
+             BufferedImage img = r.createScreenCapture(rect);
+             file = new File("images", "save"+"_"+random+".png");
+             ImageIO.write(img, "png", file);         
+          } catch (Exception err) {
+             err.printStackTrace();
+          }
+    	  
+         Board_Edit BE = new Board_Edit(file,userid);
       });
    }
 
