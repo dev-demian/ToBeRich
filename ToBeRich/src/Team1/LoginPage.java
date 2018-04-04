@@ -142,6 +142,8 @@ class LogIn extends JFrame{
     		
     		
     	  
+    	}else{
+    		JOptionPane.showMessageDialog(null, "다시 입력해 주세요", "", JOptionPane.ERROR_MESSAGE);
     	}
     	 
     	
