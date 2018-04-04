@@ -72,7 +72,7 @@ public class JoinPage extends JFrame {
       this.display();
       this.event();
       this.menu();
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setBounds(100, 100, 354, 425);
       this.setTitle("1억 만들기");
       this.setLocationByPlatform(true);

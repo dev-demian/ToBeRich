@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.SystemColor;
 
 class Board_main extends JFrame{
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
@@ -37,7 +38,7 @@ class Board_main extends JFrame{
    //DS 이미지를 넣을 라벨 변수 생성
    JLabel imgLabel;
    JTextArea textArea_1 = new JTextArea();
-   JTextArea textArea_2 = new JTextArea();
+   JTextArea TA_print_comment = new JTextArea();
    JButton btnNewButton = new JButton("수정");
    JButton button = new JButton("삭제");
    //DS DB경로 생성
@@ -52,6 +53,8 @@ class Board_main extends JFrame{
    private List<Object> list = new ArrayList();
    ImageIcon ic;
    private JTextField TF_add_comment;
+   private String printed_comment ;
+   
    
    //main에 하던 설정들을 생성자에서 진행
    public Board_main(int number) {
@@ -151,13 +154,27 @@ class Board_main extends JFrame{
       JScrollPane scroll = new JScrollPane(textArea_1);
       scroll.setBounds(505, 41, 197, 320);
       mainPanel.add(scroll);
-      textArea_2.setEditable(false);
       
       
-      textArea_2.setBounds(12, 371, 690, 130);
-      mainPanel.add(textArea_2);
+      TA_print_comment.setBackground(SystemColor.control);
+      TA_print_comment.setEditable(false);
       
-      JScrollPane scroll_1 = new JScrollPane(textArea_2);
+      List<Object>temp_O = map.get(number);
+      List<String> temp_S = (List<String>)temp_O.get(7);
+      for(int i=temp_S.size()-1;i>=0;i--){
+//    	  System.out.println("댓글 합치는중");
+//    	  System.out.println(temp_S.get(i));
+    	  printed_comment +=  temp_S.get(i)+"      \n"; 
+      }
+      //null들어가는거 제거
+      System.out.println(printed_comment);
+      //댓글처럼 달리게 보이도록 출력하기 
+      TA_print_comment.setText(printed_comment);
+      
+      TA_print_comment.setBounds(12, 371, 690, 130);
+      mainPanel.add(TA_print_comment);
+      
+      JScrollPane scroll_1 = new JScrollPane(TA_print_comment);
       scroll_1.setBounds(12, 406, 690, 147);
       mainPanel.add(scroll_1);
       //textArea_3.setText("광고"); //광고 내용이 담길 공간
