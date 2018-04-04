@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -206,6 +207,18 @@ class Main_Form extends JFrame {
          this.thisuser = null;
          LogIn LP = new LogIn();
       });
+      
+      userInformation.addActionListener(event ->{
+          String pw = JOptionPane.showInputDialog(null,"비밀번호를 입력해 주세요");
+          if(thisuser.getPwd().equals(pw)) {
+          Revise_form re = new Revise_form(this.thisuser);
+          }else if(pw ==null) {}
+          else  {
+          JOptionPane.showMessageDialog(null,"다시 입력해 주세요", "비밀번호 비 일치", JOptionPane.ERROR_MESSAGE);
+          }
+          
+       });
+
       
    }
    private void menu() {}
