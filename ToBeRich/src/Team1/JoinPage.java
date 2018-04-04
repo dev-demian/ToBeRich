@@ -136,6 +136,7 @@ public class JoinPage extends JFrame {
          
          if(Arrays.equals(pwd, pwd1)) {      //∫Òπ–π¯»£ »Æ¿Œ
             System.out.println("¿˙¿Â«ÿµµ µ ");
+         
          }
          
          Pattern pattern1 = Pattern.compile("^[∞°-∆R]{2,4}$");                  //¿Ã∏ß¡∂∞«
@@ -199,9 +200,10 @@ public class JoinPage extends JFrame {
               // TODO Auto-generated catch block
               e1.printStackTrace();
            }
-          }else
+          }else{
              System.out.println("¡∂∞« ∏∏¡∑«œ¡ˆ æ æ“Ω¿¥œ¥Ÿ ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰");
-         JOptionPane.showMessageDialog(this, "¡∂∞« ∏∏¡∑«œ¡ˆ æ æ“Ω¿¥œ¥Ÿ ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰", "∞°¿‘∫“∞°", JOptionPane.INFORMATION_MESSAGE);	
+             JOptionPane.showMessageDialog(this, "¡∂∞« ∏∏¡∑«œ¡ˆ æ æ“Ω¿¥œ¥Ÿ ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰", "∞°¿‘∫“∞°", JOptionPane.INFORMATION_MESSAGE);	
+          }
       });
 
      
