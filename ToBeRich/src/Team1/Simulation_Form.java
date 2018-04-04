@@ -61,7 +61,7 @@ public class Simulation_Form extends JFrame {
     */
    public Simulation_Form(String userid) {
 	   this.userid=userid;
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setBounds(100, 100, 1000, 750);
       contentPane = new JPanel();
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -181,7 +181,10 @@ public class Simulation_Form extends JFrame {
 				   val_x++;
 			   }
 		   }
-		   
+		   if(val.length==0){
+			   JOptionPane.showMessageDialog(this, "적금을 선택하지 않아 단순 저금으로 계산합니다.", "수정불가", JOptionPane.INFORMATION_MESSAGE);
+			   
+		   }
 //		  for(int i=0;i<val_x;i++){							// 보낼 데이터 출력해보기 
 //			  for(int j=0;j<t_column;j++){
 //				  System.out.println(val[i][j]);

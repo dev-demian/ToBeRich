@@ -136,6 +136,7 @@ class LogIn extends JFrame{
         		
     		}
     		catch(Exception er){
+    			JOptionPane.showMessageDialog(this, "아이디나 패스워드가 맞지 않습니다", "로그인 불가", JOptionPane.INFORMATION_MESSAGE);
     			er.printStackTrace();
     		}
     		

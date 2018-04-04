@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감 
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
@@ -160,6 +164,8 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       JScrollPane scroll = new JScrollPane(textArea_1);
       scroll.setBounds(505, 41, 197, 320);
       mainPanel.add(scroll);
+      
+      TA_print_comment.setBackground(SystemColor.control);
       TA_print_comment.setEditable(false);
       
       List<Object>temp_O = map.get(number);
@@ -167,7 +173,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       for(int i=temp_S.size()-1;i>=0;i--){
 //    	  System.out.println("댓글 합치는중");
 //    	  System.out.println(temp_S.get(i));
-    	  printed_comment += userid + " : "+ temp_S.get(i)+"      \n"; 
+    	  printed_comment +=  temp_S.get(i)+"      \n"; 
       }
       //null들어가는거 제거
       System.out.println(printed_comment);
@@ -217,7 +223,14 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
     	  try{
     		  //정규식 아무것도 치지 않았다면 다이얼로그 띄우고
     		  BoardControl Bc = new BoardControl();
-    		  Bc.addcomment(number, TF_Comment.getText());
+    		  
+    		  long time = System.currentTimeMillis(); 
+    		  SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+    		  String str_comment_time = dayTime.format(new Date(time));
+
+
+    		  String str = userid+" ( "+str_comment_time+" )" + "    --    " + TF_Comment.getText() ;
+    		  Bc.addcomment(number, str);
     	  }catch(Exception err){
 //    		  String commnet_str = TF_Comment.getText();
     		  err.printStackTrace();

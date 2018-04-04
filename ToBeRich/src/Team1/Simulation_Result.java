@@ -27,7 +27,6 @@ import javax.swing.UIManager;
 public class Simulation_Result extends JFrame {
 
    private JPanel contentPane;
-   JButton btnNewButton_2 = new JButton("\uBA54\uC778\uC73C\uB85C");
    JButton btnNewButton_1 = new JButton("\uB3CC\uC544\uAC00\uAE30");
    JButton btnNewButton = new JButton("\uACF5\uC720\uC544\uC774\uCF58");
    JPanel panel = new JPanel();
@@ -40,7 +39,6 @@ public class Simulation_Result extends JFrame {
    JLabel lblNewLabel_6 = new JLabel("\uD658\uAE09 \uC608\uC815\uC77C");
    JPanel panel_4 = new JPanel();
    JPanel panel_2 = new JPanel();
-   JLabel lblNewLabel_2 = new JLabel("                                ");
    JLabel L_month = new JLabel("\uAC1C\uC6D4");
    JLabel L_date = new JLabel("\uB0A0\uC9DC");
    
@@ -95,7 +93,7 @@ public class Simulation_Result extends JFrame {
 	  L_user_name.setText(userid+"ดิ  ");
 	  
 	  
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       setBounds(100, 100, 480, 320);
       contentPane = new JPanel();
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -157,11 +155,6 @@ public class Simulation_Result extends JFrame {
          contentPane.add(panel_2, BorderLayout.SOUTH);
                  
          panel_2.add(btnNewButton_1);
-         
-         panel_2.add(lblNewLabel_2);
-         
-         
-         panel_2.add(btnNewButton_2);
       }
    
    private void event() {
@@ -182,6 +175,9 @@ public class Simulation_Result extends JFrame {
           }
     	  
          Board_Edit BE = new Board_Edit(file,userid);
+      });
+      btnNewButton_1.addActionListener(e->{
+    	  dispose();
       });
    }
 }
