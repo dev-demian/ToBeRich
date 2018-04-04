@@ -51,6 +51,7 @@ class Board_main extends JFrame{
    private Map<Integer,List<Object>> map = new HashMap<>();
    private List<Object> list = new ArrayList();
    ImageIcon ic;
+   private JTextField TF_add_comment;
    
    //main에 하던 설정들을 생성자에서 진행
    public Board_main(int number) {
@@ -114,7 +115,7 @@ class Board_main extends JFrame{
       
       
       label_1.setFont(new Font("굴림", Font.PLAIN, 14));
-      label_1.setBounds(495, 10, 28, 21);
+      label_1.setBounds(488, 10, 28, 21);
       mainPanel.add(label_1);
       
       
@@ -122,6 +123,7 @@ class Board_main extends JFrame{
       mainPanel.add(textField);
       //DS list의 0인덱스(제목)를 필드에 채움
       textField.setText((String)list.get(0));
+      textField_1.setEditable(false);
       
       
       textField_1.setColumns(10);
@@ -129,6 +131,7 @@ class Board_main extends JFrame{
       mainPanel.add(textField_1);
       //DS Main_Form에서 받은 게시판 번호(number)를 필드에 채움
       textField_1.setText(String.valueOf(number));
+      textField_2.setEditable(false);
       
       textField_2.setColumns(10);
       textField_2.setBounds(535, 11, 167, 26);
@@ -148,27 +151,39 @@ class Board_main extends JFrame{
       JScrollPane scroll = new JScrollPane(textArea_1);
       scroll.setBounds(505, 41, 197, 320);
       mainPanel.add(scroll);
+      textArea_2.setEditable(false);
       
       
       textArea_2.setBounds(12, 371, 690, 130);
       mainPanel.add(textArea_2);
       
       JScrollPane scroll_1 = new JScrollPane(textArea_2);
-      scroll_1.setBounds(12, 371, 690, 130);
+      scroll_1.setBounds(12, 406, 690, 147);
       mainPanel.add(scroll_1);
       //textArea_3.setText("광고"); //광고 내용이 담길 공간
       
-      btnNewButton.setBounds(500, 511, 97, 45);
+      btnNewButton.setBounds(760, 511, 97, 45);
       mainPanel.add(btnNewButton);
       
       
-      button.setBounds(605, 511, 97, 45);
+      button.setBounds(883, 511, 97, 45);
       mainPanel.add(button);
       ic  = new ImageIcon("property/googlead.png");
       JLabel ad_sense = new JLabel();
       ad_sense.setIcon(ic);
-      ad_sense.setBounds(716, 42, 257, 514);
+      ad_sense.setBounds(716, 42, 257, 457);
       mainPanel.add(ad_sense);
+      
+      TF_add_comment = new JTextField();
+      TF_add_comment.setEditable(false);
+      TF_add_comment.setBounds(12, 374, 599, 24);
+      mainPanel.add(TF_add_comment);
+      TF_add_comment.setColumns(10);
+      
+      JButton btnNewButton_1 = new JButton("\uB4F1\uB85D");
+      btnNewButton_1.setEnabled(false);
+      btnNewButton_1.setBounds(613, 373, 89, 27);
+      mainPanel.add(btnNewButton_1);
    }
 
    private void event() {
@@ -227,21 +242,4 @@ class Board_main extends JFrame{
    private void menu() {
       
    }
-
-
-
-//   public static void main(String[] args) {
-//      /*
-////스킨 설치
-//      try {
-//         UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-//      } catch (Exception e) {
-//         // TODO Auto-generated catch block
-//         e.printStackTrace();
-//      }
-//      */
-//      //창을 더이상 직접 만들지 않고 확장시킨 클래스의 인스턴스를 생성
-//	   Board_main window = new Board_main();
-//      
-//   }
 }

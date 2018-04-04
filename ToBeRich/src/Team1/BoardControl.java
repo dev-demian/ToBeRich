@@ -12,35 +12,39 @@ public class BoardControl {
    
    private Map<Integer,List<Object>> table_map = new HashMap<>();
    //DS 게시판에 번호를 제외한 정보를 List로 저장한다
-   private List<Object> list = new ArrayList();
+   private List<Object> new_list = new ArrayList();
    private String title; //DS 제목
    private String password; //DS 글 작성 시 비민번호
    private String img; //DS 결과 스크린샷 이미지 저장 경로
    private String text; //DS 본문 내용
    private int number; //DS 게시판에 게시물 등록 시 최신 번호 생성
-
+   private List<String> comment =new ArrayList();// 댓글 저장하기 위한 변수
    
    public BoardControl() {
 	// TODO Auto-generated constructor stub
 	  System.out.println("기본 생성자 호출");
    }
    
-   //DS 받은 전체 정보를 해당 필드에 저장 후 리스트에 저장한다
-   public void allSet(String title,String password,File file, String text,String userid) {
-      //DS 필드에 저장
+   //DS 받은 전체 정보를 해당 필드에 저장 후 리스트에 저장한다  DB신규 생성시 호출 
+   public void allSet(String title,String password,File file, String text,String userid) { 
+	 //0제목 1 비번 2 파일경로 3 텍스트에어리어 4 아이디 5날짜 6 조회수 7 댓글
+	   //DS 필드에 저장
       this.title = title;
       this.password = password;
       this.text = text;
+      
       //DS 필드를 리스트에 저장
-      list.add(this.title);
-      list.add(this.password);
-      list.add(file);
-      list.add(this.text);
-      list.add(userid); //DS 게시물을 올린 사용자의 이름을 받아서 저장(홍길동으로 우선 저장함) ##사용자 정보 DB와 연동 필요##
+      new_list.add(this.title);
+      new_list.add(this.password);
+      new_list.add(file);
+      new_list.add(this.text);
+      new_list.add(userid); //DS 게시물을 올린 사용자의 이름을 받아서 저장(홍길동으로 우선 저장함) ##사용자 정보 DB와 연동 필요##
       //DS 현재 날짜를 구하고 list에 저장함
       String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
-      list.add(date); //DS 현재 날짜와 시간을 저장함
-      list.add(0); //DS 해당 게시물 조회수를 list에 저장함(초기값을 0으로 설정함)
+      new_list.add(date); //DS 현재 날짜와 시간을 저장함
+      new_list.add(0); //DS 해당 게시물 조회수를 list에 저장함(초기값을 0으로 설정함)
+      this.comment.add("디폴트 댓글");
+      new_list.add(this.comment);//처음에는 공백이지만 댓글등록시 하나하나 채워나갈것 
    }
    
    //DS 게시물 확인폼(Board_main)이 뜰 때마다 조회수를 1씩 증가하기 위한 메소드이며 최신 갱신 map,게시물 번호를 전달 받는다
@@ -48,14 +52,14 @@ public class BoardControl {
 	   this.number = number;
 	   this.map = map;
 	   //DS 게시물 번호에 해당하는 list를 뽑아 클래스 범위의 list에 저장
-	   this.list = map.get(number);
+	   this.new_list = map.get(number);
 	   //DS 마지막 조회수에서 1증가한 값을 클래스 list에 저장한다
-	   list.set(6, (int)(list.get(6))+1);
+	   new_list.set(6, (int)(new_list.get(6))+1);
 	   //DS 변경 된 list를 map에 갱신
-	   map.put(number, list);
+	   map.put(number, new_list);
 	   //DS 갱신 된 map을 DB에 저장
 	   this.mapOutput();
-	   System.out.println(list);
+	   System.out.println(new_list);
    }
    
    //DS Board_main(게시물 확인 폼)에서 수정 버튼을 눌렀을 때 DB최신 갱신map,게시물 번호,수정 된 제목,내용 데이터를 전달 받는 메소드
@@ -75,7 +79,7 @@ public class BoardControl {
 	   String date = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
 	   list.set(5, date);
 	   //클래스 범위 list에 메소드 범위 list를 넣는다
-	   this.list = list;
+	   this.new_list = list;
 	   //클래스 범위 map에 key값(게시물 번호)에 해당하는 map value의 list를 재저장한다
 	   map.put(number, list);
 	   //변경 된 map을 DB에 저장한다
@@ -111,10 +115,10 @@ public class BoardControl {
                 number = key;
           }
           number++;
-          map.put(number, list);
+          map.put(number, new_list);
        }catch(Exception e) {
           //DS DB에서 불러 올 데이터가 있으면 실행
-          map.put(1, list);
+          map.put(1, new_list);
           e.printStackTrace();
        }
    }
@@ -184,5 +188,37 @@ public class BoardControl {
       
 	return Table;  //null반환시 Text가 없다 ;
 }
+   
+   
+   public void addcomment(int number,String comment){
+	   Map<Integer,List<Object>> called_map = new HashMap<>();
+	   String new_comment  = comment;
+	   if(target.exists()){
+			  System.out.println("파일이 존재함");
+			  try{
+				  ObjectInputStream in = new ObjectInputStream(
+						  new BufferedInputStream(new FileInputStream(target)));
+				  //DS DB에 읽어 올 데이터가 존재하면 실행 된다
+				  called_map = (Map<Integer,List<Object>>)in.readObject();// DB맵 복사 임시 맵에 삽입
+				  in.close();
+				  List<Object> temp_list = new ArrayList<>();			  // 임시 list에 value값 삽입
+				  List<String> temp_comment ;							  // 댓글 변수 임시로 선언후 저장한뒤 새로 추가할 댓글을 넣어주고 
+				  temp_list = called_map.get(number);
+				  temp_comment = (List<String>)temp_list.get(7);
+				  temp_comment.add(new_comment);
+				  temp_list.set(7, temp_comment);						  // 임시 value값에 바꾼 댓글 변수로 교체시킨다 
+				  called_map.put(number, temp_list);					  // 바뀐 value값으로 다시 넣어줌 
+				  this.map = called_map;								  // 갱신된 맵을 덮어씌우기 
+				  this.mapOutput();
+				  
+			  }
+			  catch(Exception e){
+				  e.printStackTrace();
+			  }
+	   }else{
+			  System.out.println("파일이 존재하지 않아 생성 후 새로고침 하시오");
+			 
+		  }
+   }
    
 }

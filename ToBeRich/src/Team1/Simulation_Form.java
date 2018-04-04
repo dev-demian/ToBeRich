@@ -5,6 +5,8 @@ import java.awt.Button;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JEditorPane;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
@@ -188,15 +191,33 @@ public class Simulation_Form extends JFrame {
 //		   System.out.println(val.length);					// 보낼 데이터의 길이확인 
 		   
 		   //여기에 계산하는거 Cul 클래스 넣어줘서 계산 끝내고 리턴값 받아서 매개변수로 넣어줌 
-		   
-		   int total_money =  Integer.parseInt(Total_money.getText().toString());
-		   
-		   System.out.println(total_money);
-		   Savings_Calculator SC = new Savings_Calculator(val,total_money);
-		   SC.sort();
-		   String[] resultstr = SC.Calculate();
-		   Simulation_Result SRcall = new Simulation_Result(resultstr,userid);   
-      });
+//		   
+//		   int total_money =  Integer.parseInt(Total_money.getText().toString());
+//		   System.out.println(total_money);
+//		   Savings_Calculator SC = new Savings_Calculator(val,total_money);
+//		   SC.sort();
+//		   String[] resultstr = SC.Calculate();
+//		   Simulation_Result SRcall = new Simulation_Result(resultstr,userid);   
+      
+		   Pattern pattern = Pattern.compile("[1-9][0-9]{3,9}");
+	         Matcher match = pattern.matcher(Total_money.getText());
+	         if(match.matches()){
+	            int total_money =  Integer.parseInt(Total_money.getText().toString());
+	            System.out.println(total_money);
+	            Savings_Calculator SC = new Savings_Calculator(val,total_money);
+	            SC.sort();
+	            String[] resultstr = SC.Calculate();
+	            Simulation_Result SRcall = new Simulation_Result(resultstr,userid);   
+	         }
+	         else
+	           JOptionPane.showMessageDialog(this, "1000원에서 1억 사이의 금액만 가능", "수정불가", JOptionPane.INFORMATION_MESSAGE);
+	   
+	   });
+	   
+	   
+	   
+	   
+	   
    } 
    
   
