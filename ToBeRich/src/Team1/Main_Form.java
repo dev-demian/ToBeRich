@@ -30,7 +30,7 @@ class Main_Form extends JFrame {
 //   Panel을 만들어서 Component를 배치할 수 있도록 설정할 수 있다(ContentPane)
    private JPanel mainPanel = new JPanel();
    
-   private String name = "멍청이";
+   private String name = "디폴트";
    private JLabel user = new JLabel(name + "님", JLabel.CENTER);
    private JButton simulation = new JButton("시뮬레이션");
    private JButton userInformation = new JButton("정보수정");
@@ -48,7 +48,7 @@ class Main_Form extends JFrame {
    //main에 하던 설정들을 생성자에서 진행
    public Main_Form( User target_user) {
 	  this.thisuser = target_user;
-	  user.setText(this.thisuser.getName());
+	  user.setText(this.thisuser.getName()+" 님");
 	  this.display();//화면 구성 관련 처리
       this.event();//이벤트 관련 처리
       this.menu();//메뉴 관련 처리
@@ -89,7 +89,7 @@ class Main_Form extends JFrame {
       Object[][] data = BC.calltable();
       
       String[] header =  new String[] {
-        		"\uBC88\uD638", "\uC81C\uBAA9", "\uC774\uB984", "\uB0A0\uC790", "\uC870\uD68C\uC218"
+        		"\uBC88\uD638", "\uC81C\uBAA9", "\uC791\uC131\uC790", "\uB0A0\uC790", "\uC870\uD68C\uC218"
         	};
       //S : 테이블
       DefaultTableModel model = new DefaultTableModel(data, header) {
