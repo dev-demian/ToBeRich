@@ -201,7 +201,7 @@ public class JoinPage extends JFrame {
            }
           }else
              System.out.println("조건 만족하지 않았습니다 다시 입력해주세요");
-      
+         JOptionPane.showMessageDialog(this, "조건 만족하지 않았습니다 다시 입력해주세요", "가입불가", JOptionPane.INFORMATION_MESSAGE);	
       });
 
      
