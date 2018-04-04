@@ -81,7 +81,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 	  
 	  //DS 생성자를 통해 게시물 확일 폼이 뜰 때마다 조회수가 1씩 증가하는 메소드 호출
 	  BoardControl bc = new BoardControl();
-	  bc.viewAdd(map,number);
+	  bc.viewAdd(number);
 	  
 	  //DS 생성자에서 list의 2인덱스 데이터를 받아 이미지 경로를 저장하고 
 	  //이미지 경로를 Image타입으로 변환해 저장한다

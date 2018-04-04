@@ -218,7 +218,7 @@ class Board_main extends JFrame{
     		  //DS BoardControl 객체 생성
     		  BoardControl bc = new BoardControl();
     		  //DS BoardControl 내의 updateSet(수정기능) 메소드를 호출하며 field와 area에 입력한 데이터를 전달한다
-    		  bc.updateSet(map,number,textField.getText(),textArea_1.getText());
+    		  bc.updateSet(number,textField.getText(),textArea_1.getText());
     		  //DS 완료 확인창을 띄운다
     		  JOptionPane.showMessageDialog(null,"게시물 수정 완료");
     		  //DS 해당 폼을 종료한다
@@ -228,7 +228,7 @@ class Board_main extends JFrame{
     		  //DS 아무른 이벤트 없음
     	  //DS 입력한 비번이 불일치하면 오류 메시지창을 띄운다
     	  }else if(list.get(1) != (pw)) {
-    		  JOptionPane.showMessageDialog(null, "오류", "오류", JOptionPane.ERROR_MESSAGE);
+    		  JOptionPane.showMessageDialog(null, "비밀번호 불일치", "불일치", JOptionPane.ERROR_MESSAGE);
     	  }
       });
       
@@ -241,7 +241,7 @@ class Board_main extends JFrame{
     		//DS BoardControl 객체 생성
     		BoardControl bc = new BoardControl();
     		//DS BoardControl 내의 delete(게시물 삭제 기능) 메소드 호출이며 전달 데이터로는 최신 갱신 map,게시물 번호,해당 이미지 경로가 있다
-    		bc.delete(map,number,imgPath);
+    		bc.delete(number,imgPath);
     		//DS 완료 확인창을 띄운다
     		JOptionPane.showMessageDialog(null,"게시물 삭제 완료");
   		  	//DS 해당 폼을 종료한다
@@ -250,7 +250,7 @@ class Board_main extends JFrame{
     		  //DS 아무른 이벤트 없음
     	  //DS 입력한 비번이 불일치하면 오류 메시지창을 띄운다
     	  }else if(list.get(1) != (pw)) {
-    		  JOptionPane.showMessageDialog(null, "오류", "오류", JOptionPane.ERROR_MESSAGE);
+    		  JOptionPane.showMessageDialog(null, "비밀번호 불일치", "불일치", JOptionPane.ERROR_MESSAGE);
     	  }
       });
       
