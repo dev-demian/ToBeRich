@@ -37,7 +37,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    //DS 이미지를 넣을 라벨 변수 생성
    JLabel imgLabel;
    JTextArea textArea_1 = new JTextArea();
-   JTextArea textArea_2 = new JTextArea();
+   JTextArea TA_print_comment = new JTextArea();
    JButton edit_button = new JButton("\uC218\uC815/\uC0AD\uC81C");
    //DS DB경로 생성
    private File target = new File("DB","board.txt");
@@ -51,7 +51,9 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    private List<Object> list = new ArrayList();
    String userid;//해당 유저만 수정 삭제폼을 불러오기위한 구분자
    ImageIcon ic;
-   
+   private final JTextField TF_Comment = new JTextField();
+   private final JButton add_commnet_btn = new JButton("\uB4F1\uB85D");
+   private String printed_comment ;
    
    
    //main에 하던 설정들을 생성자에서 진행
@@ -87,6 +89,9 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 		}
 	  //DS Image타입의 변수를 ImageIcon으로 변환 후 상위 클래스 타입인 JLabel에 삽입한다
 	  imgLabel = new JLabel(new ImageIcon(img));
+	  
+	   
+	  
 	  
       this.display();//화면 구성 관련 처리
       this.event();//이벤트 관련 처리
@@ -137,7 +142,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       textField_2.setEditable(false);
       
       textField_2.setColumns(10);
-      textField_2.setBounds(535, 8, 167, 26);
+      textField_2.setBounds(535, 11, 167, 26);
       mainPanel.add(textField_2);
       //DS list의 5인덱스(날짜)를 필드에 채움
       textField_2.setText((String)list.get(5));
@@ -155,26 +160,44 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       JScrollPane scroll = new JScrollPane(textArea_1);
       scroll.setBounds(505, 41, 197, 320);
       mainPanel.add(scroll);
-      textArea_2.setEditable(false);
+      TA_print_comment.setEditable(false);
       
+      List<Object>temp_O = map.get(number);
+      List<String> temp_S = (List<String>)temp_O.get(7);
+      for(int i=temp_S.size()-1;i>=0;i--){
+//    	  System.out.println("댓글 합치는중");
+//    	  System.out.println(temp_S.get(i));
+    	  printed_comment += userid + " : "+ temp_S.get(i)+"      \n"; 
+      }
+      //null들어가는거 제거
+      System.out.println(printed_comment);
+      //댓글처럼 달리게 보이도록 출력하기 
+      TA_print_comment.setText(printed_comment);
       
-      textArea_2.setBounds(12, 371, 690, 130);
-      mainPanel.add(textArea_2);
+      TA_print_comment.setBounds(12, 371, 690, 130);
+      mainPanel.add(TA_print_comment);
       
-      JScrollPane scroll_1 = new JScrollPane(textArea_2);
-      scroll_1.setBounds(12, 371, 690, 130);
+      JScrollPane scroll_1 = new JScrollPane(TA_print_comment);
+      scroll_1.setBounds(12, 410, 688, 143);
       mainPanel.add(scroll_1);
       
       
-      edit_button.setBounds(605, 511, 97, 45);
+      edit_button.setBounds(876, 508, 97, 45);
       mainPanel.add(edit_button);
      
       ic  = new ImageIcon("property/googlead.png");
       JLabel ad_sense = new JLabel();
       ad_sense.setIcon(ic);
-      ad_sense.setBounds(716, 42, 257, 514);
+      ad_sense.setBounds(716, 42, 257, 457);
       
       mainPanel.add(ad_sense);
+      TF_Comment.setColumns(10);
+      TF_Comment.setBounds(12, 374, 599, 24);
+      
+      mainPanel.add(TF_Comment);
+      add_commnet_btn.setBounds(613, 373, 89, 27);
+      
+      mainPanel.add(add_commnet_btn);
    }
 
    private void event() {
@@ -188,6 +211,17 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
     		  Board_main bm = new Board_main(number);
     	  }else
     		  JOptionPane.showMessageDialog(this, "해당 게시물의 등록자가 아닙니다", "수정불가", JOptionPane.INFORMATION_MESSAGE);
+      });
+      
+      add_commnet_btn.addActionListener(e->{
+    	  try{
+    		  //정규식 아무것도 치지 않았다면 다이얼로그 띄우고
+    		  BoardControl Bc = new BoardControl();
+    		  Bc.addcomment(number, TF_Comment.getText());
+    	  }catch(Exception err){
+//    		  String commnet_str = TF_Comment.getText();
+    		  err.printStackTrace();
+    	  }
       });
       
    }
