@@ -39,6 +39,7 @@ class Main_Form extends JFrame {
    private JLabel title = new JLabel("< 게시판 >");
    private Font font = new Font("", Font.PLAIN, 30);
    private final JTable table = new JTable();
+   JButton reload = new JButton("\uC0C8\uB85C\uACE0\uCE68");
    User thisuser;
    ImageIcon ic;
   
@@ -53,11 +54,11 @@ class Main_Form extends JFrame {
 	  this.display();//화면 구성 관련 처리
       this.event();//이벤트 관련 처리
       this.menu();//메뉴 관련 처리
-      
+      this.setLocation(200, 100);
       this.setTitle("GUI테스트");
       this.setSize(1000, 600);
 //      위치를 운영체제가 결정하도록 하자
-      this.setLocationByPlatform(true);
+      this.setLocationByPlatform(false);
 //      상단부분이 나오지 않도록 설정
 //      this.setUndecorated(true);
       this.setResizable(false);
@@ -135,6 +136,9 @@ class Main_Form extends JFrame {
       iconimg.setIcon(ic);
       iconimg.setBounds(28, 32, 130, 128);
       mainPanel.add(iconimg);
+      
+      reload.setBounds(871, 30, 89, 27);
+      mainPanel.add(reload);
       //테이블 정렬
       DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
       renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,20 +189,28 @@ class Main_Form extends JFrame {
       table.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
-             int row = table.getSelectedRow();
-             int col = table.getSelectedColumn();
-             int rowCount = table.getSelectedRowCount();
-//             System.out.println(table.getValueAt(row, 0));
-             
-//             int colCount = table.getColumnCount();
-//             for(int i = 0; i < colCount; i++) {
-                 //System.out.println(table.getValueAt(row, col));
-             	//게시물을 클릭했을 때 게시물 번호를 Board_main에 전달하고 Board_main폼이 뜬다
-                 Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()),thisuser.getId().toString());
-//             }
-             //값가져오기
-//             System.out.println(table.getValueAt(row, col));
-          }
+        	  try {
+                  int row = table.getSelectedRow();
+                  int col = table.getSelectedColumn();
+                  int rowCount = table.getSelectedRowCount();
+                  // System.out.println(table.getValueAt(row, 0));
+
+                  // int colCount = table.getColumnCount();
+                  // for(int i = 0; i < colCount; i++) {
+                  // System.out.println(table.getValueAt(row, col));
+                  // 게시물을 클릭했을 때 게시물 번호를 Board_main에 전달하고 Board_main폼이 뜬다
+                  Board_show bs = new Board_show(Integer.parseInt(table.getValueAt(row, 0).toString()),
+                        thisuser.getId().toString());
+                  // }
+                  // 값가져오기
+                  // System.out.println(table.getValueAt(row, col));
+               } catch (Exception e1) {
+                  System.out.println("삭제 된 게시물입니다.");
+                  JOptionPane.showMessageDialog(null,
+                        "삭제 된 게시물/게시판 새로고침을 누르세요","",JOptionPane.ERROR_MESSAGE);
+               }
+            }
+
        });
       
       //로그아웃
@@ -217,6 +229,10 @@ class Main_Form extends JFrame {
           JOptionPane.showMessageDialog(null,"다시 입력해 주세요", "비밀번호 비 일치", JOptionPane.ERROR_MESSAGE);
           }
           
+       });
+      reload.addActionListener(event -> {
+          Main_Form callmain = new Main_Form(thisuser);
+          this.dispose();
        });
 
       

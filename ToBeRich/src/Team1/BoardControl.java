@@ -48,9 +48,20 @@ public class BoardControl {
    }
    
    //DS 게시물 확인폼(Board_main)이 뜰 때마다 조회수를 1씩 증가하기 위한 메소드이며 최신 갱신 map,게시물 번호를 전달 받는다
-   public void viewAdd(Map<Integer,List<Object>> map, int number){
+   public void viewAdd( int number){
+	   try{
+			  ObjectInputStream in = new ObjectInputStream(
+					  new BufferedInputStream(new FileInputStream(target)));
+			  //DS DB에 읽어 올 데이터가 존재하면 실행 된다
+			  map = (Map<Integer,List<Object>>)in.readObject();
+			  in.close();
+		  }
+		  catch(Exception e){
+			  e.printStackTrace();
+		  }
+	   
 	   this.number = number;
-	   this.map = map;
+	   
 	   //DS 게시물 번호에 해당하는 list를 뽑아 클래스 범위의 list에 저장
 	   this.new_list = map.get(number);
 	   //DS 마지막 조회수에서 1증가한 값을 클래스 list에 저장한다
@@ -63,15 +74,27 @@ public class BoardControl {
    }
    
    //DS Board_main(게시물 확인 폼)에서 수정 버튼을 눌렀을 때 DB최신 갱신map,게시물 번호,수정 된 제목,내용 데이터를 전달 받는 메소드
-   public void updateSet(Map<Integer,List<Object>> map,int number,String title,String text) {
+   public void updateSet(int number,String title,String text) {
+	   
+	   try{
+			  ObjectInputStream in = new ObjectInputStream(
+					  new BufferedInputStream(new FileInputStream(target)));
+			  //DS DB에 읽어 올 데이터가 존재하면 실행 된다
+			  map = (Map<Integer,List<Object>>)in.readObject();
+			  in.close();
+		  }
+		  catch(Exception e){
+			  e.printStackTrace();
+		  }
+	   
 	   //해당 게시물 번호를 전달 받아 필드에 저장
 	   this.number = number;
 	   //최신 갱신 된 map을 전달 받아 저장한다
-	   this.map = map;
+	   
 	   //메소드 내에서만 사용하는 list를 생성
 	   List<Object> list = new ArrayList<>();
 	   //메소드 범위 list에 클래스 범위 map의 해당 key값(게시판 번호)의 value(list<object>)를 넣는다 
-	   list = this.map.get(number);
+	   list = map.get(number);
 	   //제목과 내용의 변경 데이터를 전달 받아 메소드 범위 list에 저장한다
 	   list.set(0, title);
 	   list.set(3, text);
@@ -87,9 +110,18 @@ public class BoardControl {
    }
    
    //DS Board_main(확인창)에서 삭제 버튼을 누르면 호출 되는 메소드이며 전달 받는 데이터는 최신 갱신 map,게시물 번호,삭제할 이미지 경로이다
-   public void delete(Map<Integer,List<Object>> map,int number,File imgPath) {
+   public void delete(int number,File imgPath) {
 	   //클래스 범위 map에 저장
-	   this.map = map;
+	   try{
+			  ObjectInputStream in = new ObjectInputStream(
+					  new BufferedInputStream(new FileInputStream(target)));
+			  //DS DB에 읽어 올 데이터가 존재하면 실행 된다
+			  map = (Map<Integer,List<Object>>)in.readObject();
+			  in.close();
+		  }
+		  catch(Exception e){
+			  e.printStackTrace();
+		  }
 	   //클래스 범위 변수에 저장
 	   this.number = number;
 	   //전달 받은 이미지 경로의 이미지 파일을 삭제
