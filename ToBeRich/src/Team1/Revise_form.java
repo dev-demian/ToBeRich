@@ -158,9 +158,9 @@ public class Revise_form extends JFrame {//정보 수정 폼
             dispose();
             
             try {
-               ObjectInputStream in = new ObjectInputStream(
-               new BufferedInputStream(new FileInputStream(target)));
-               map = (Map<String, User>) in.readObject();
+               
+               FileClient app_u = new FileClient("127.0.0.1",8888);
+               map = (Map<String,User>)app_u.call_request("user");
                
                ObjectOutputStream out = new ObjectOutputStream(
                new BufferedOutputStream(new FileOutputStream(target)));
@@ -170,6 +170,11 @@ public class Revise_form extends JFrame {//정보 수정 폼
                map.put(user.getId(), user);
                out.writeObject(map);
                out.flush();
+               
+               Pakage data = new Pakage("user",map);
+               FileClient app_user = new FileClient("127.0.0.1",8888);
+               app_user.save_request(data); 
+               
                System.out.println("DB 갱신 완료");
                JOptionPane.showMessageDialog(null,"수정 완료");
             } catch (Exception e1) {

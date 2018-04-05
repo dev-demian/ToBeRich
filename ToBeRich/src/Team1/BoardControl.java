@@ -71,6 +71,7 @@ public class BoardControl {
        } catch (Exception e1) {
           System.out.println("BoardConrol에 데이터 전송 중 오류");
        }
+       //해당 이미지도 보내야한
    }
    
    //DS 게시물 확인폼(Board_main)이 뜰 때마다 조회수를 1씩 증가하기 위한 메소드이며 최신 갱신 map,게시물 번호를 전달 받는다

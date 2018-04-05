@@ -122,6 +122,10 @@ class Board_Edit extends JDialog {
       });
 
       btnNewButton_1.addActionListener(e -> {
+    	  //해당 파일 삭제하기 
+    	  file.delete();
+    	  
+    	  
          dispose();
       });
    }

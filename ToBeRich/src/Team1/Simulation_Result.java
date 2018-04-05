@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.FlowLayout;
@@ -19,6 +20,7 @@ import javax.swing.JFormattedTextField;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -169,9 +171,20 @@ public class Simulation_Result extends JFrame {
              Rectangle rect = new Rectangle(this.getX(), this.getY(), 480, 320);// 좌표가 창의위치를 따라간다.
              BufferedImage img = r.createScreenCapture(rect);
              file = new File("images", "save"+"_"+random+".png");
-             ImageIO.write(img, "png", file);         
-          } catch (Exception err) {
-             err.printStackTrace();
+             ImageIO.write(img, "png", file);   
+             
+             Pakage data = new Pakage("img",file);
+             try{
+            	 FileClient FC = new FileClient("127.0.0.1",8888);
+            	 FC.save_request(data);
+            	 
+             }catch(Exception err3){
+            	 err3.printStackTrace();
+             }
+             
+             
+          } catch (Exception err2) {
+             err2.printStackTrace();
           }
     	  
          Board_Edit BE = new Board_Edit(file,userid);

@@ -36,37 +36,37 @@ public class FileClient extends JFrame
    
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
-    
-		System.out.println("welcome client");
-		File Userdb = new File("DB","user.txt");
-//		try{
 //    
-//			FileInputStream in = new FileInputStream(Userdb);
-//			BufferedInputStream bufferin = new BufferedInputStream (in);
-//			ObjectInputStream datain = new ObjectInputStream(bufferin);
-//			userinfo  = (Map<String,User>)datain.readObject();
+//		System.out.println("welcome client");
+//		File Userdb = new File("DB","user.txt");
+////		try{
+////    
+////			FileInputStream in = new FileInputStream(Userdb);
+////			BufferedInputStream bufferin = new BufferedInputStream (in);
+////			ObjectInputStream datain = new ObjectInputStream(bufferin);
+////			userinfo  = (Map<String,User>)datain.readObject();
+////    	
+////    }catch(Exception e){
+////    	e.printStackTrace();
+////    }
+//
+//    Pakage data = new Pakage("user",userinfo);
+//    FileClient app = new FileClient("127.0.0.1",8888);
+////    app.save_request(data);  
+//    Map<String,User> result_Map = (Map<String,User>)app.call_request("user");  // user savings board images¡ﬂ 1  
+//    try{
 //    	
+//        
+//		FileOutputStream out = new FileOutputStream(Userdb);
+//		BufferedOutputStream bufferout = new BufferedOutputStream (out);
+//		ObjectOutputStream dataout = new ObjectOutputStream(bufferout);
+//		dataout.writeObject(result_Map);
+//		dataout.flush();
+//		System.out.println(result_Map);
 //    }catch(Exception e){
 //    	e.printStackTrace();
 //    }
-
-    Pakage data = new Pakage("user",userinfo);
-    FileClient app = new FileClient("127.0.0.1",8888);
-//    app.save_request(data);  
-    Map<String,User> result_Map = (Map<String,User>)app.call_request("user");  // user savings board images¡ﬂ 1  
-    try{
-    	
-        
-		FileOutputStream out = new FileOutputStream(Userdb);
-		BufferedOutputStream bufferout = new BufferedOutputStream (out);
-		ObjectOutputStream dataout = new ObjectOutputStream(bufferout);
-		dataout.writeObject(result_Map);
-		dataout.flush();
-		System.out.println(result_Map);
-    }catch(Exception e){
-    	e.printStackTrace();
-    }
-    
+//    
     
     
   }
