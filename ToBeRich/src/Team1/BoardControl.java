@@ -2,6 +2,7 @@
 package Team1;
 
 import java.io.*;
+import java.net.UnknownHostException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -20,9 +21,22 @@ public class BoardControl {
    private int number; //DS 게시판에 게시물 등록 시 최신 번호 생성
    private List<String> comment =new ArrayList();// 댓글 저장하기 위한 변수
    
-   public BoardControl() {
+   public BoardControl() throws UnknownHostException, IOException {
 	// TODO Auto-generated constructor stub
-	  System.out.println("기본 생성자 호출");
+	  System.out.println("기본 생성자 호출 최신 게시판 정보를 가져옵니다 ");
+	  
+	  FileClient app_b = new FileClient("127.0.0.1",8888);
+	  this.map = (Map<Integer,List<Object>>)app_b.call_request("board");
+	  try{
+	    	FileOutputStream out = new FileOutputStream(target);
+			BufferedOutputStream bufferout = new BufferedOutputStream (out);
+			ObjectOutputStream dataout = new ObjectOutputStream(bufferout);
+			dataout.writeObject(this.map);
+			dataout.flush();
+			System.out.println(this.map);
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
    }
    
    //DS 받은 전체 정보를 해당 필드에 저장 후 리스트에 저장한다  DB신규 생성시 호출 
@@ -45,6 +59,18 @@ public class BoardControl {
       new_list.add(0); //DS 해당 게시물 조회수를 list에 저장함(초기값을 0으로 설정함)
       this.comment.add("디폴트 댓글");
       new_list.add(this.comment);//처음에는 공백이지만 댓글등록시 하나하나 채워나갈것 
+      
+      try {
+          mapInput();
+       } catch (Exception e1) {
+          System.out.println("BoardConrol에 데이터 전송 중 오류");
+       }
+       // DS 갱신 된 map을 DB에 갱신
+       try {
+          mapOutput();
+       } catch (Exception e1) {
+          System.out.println("BoardConrol에 데이터 전송 중 오류");
+       }
    }
    
    //DS 게시물 확인폼(Board_main)이 뜰 때마다 조회수를 1씩 증가하기 위한 메소드이며 최신 갱신 map,게시물 번호를 전달 받는다
@@ -162,6 +188,11 @@ public class BoardControl {
          
          out.writeObject(map);
          out.flush();
+         
+         Pakage data = new Pakage("board",map);
+         FileClient app_b = new FileClient("127.0.0.1",8888);
+         app_b.save_request(data);
+         
       }catch(Exception e) {
          System.out.println("DB에 데이터를 저장 중 오류");
          e.printStackTrace();
