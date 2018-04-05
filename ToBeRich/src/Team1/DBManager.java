@@ -26,7 +26,7 @@ public class DBManager {
       this.Userdb = new File("DB","user.txt");// 나중에 상대 경로로 바꿔주기
       this.Savingsdb = new File("DB","savings.txt");
       /////////////////////////////////////////////////////////////////////////////////////////////
-      if(this.Userdb.exists()){
+     
          try{
             System.out.println("파일이 이미 있어서 파일을 불러옵니다");
             FileInputStream in = new FileInputStream(Userdb);
@@ -36,27 +36,26 @@ public class DBManager {
             datain.close();
          }catch(Exception e){
             e.printStackTrace();
+            System.out.println("파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
+            
+            User defalt_user = new User("guak908","asdfasdf","곽재훈","남자","guak908@hanmail.net");
+            Map<String,User> defalt_map = new HashMap<String,User>();
+            defalt_map.put("guak908", defalt_user);
+            try{
+            	FileOutputStream dbout = new FileOutputStream(Userdb);
+            	BufferedOutputStream dbbufferout = new BufferedOutputStream(dbout);
+            	ObjectOutputStream dbdataout = new ObjectOutputStream(dbbufferout);
+            	dbdataout.writeObject(defalt_map);
+            	dbdataout.close();
+            }catch(Exception err){
+            	err.printStackTrace();
+            }
          }
          
-      }else{
-         System.out.println("파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
+      
          
-         User defalt_user = new User("guak908","asdfasdf","곽재훈","남자","guak908@hanmail.net");
-         Map<String,User> defalt_map = new HashMap<String,User>();
-         defalt_map.put("guak908", defalt_user);
-         try{
-            FileOutputStream dbout = new FileOutputStream(Userdb);
-            BufferedOutputStream dbbufferout = new BufferedOutputStream(dbout);
-            ObjectOutputStream dbdataout = new ObjectOutputStream(dbbufferout);
-            dbdataout.writeObject(defalt_map);
-            dbdataout.close();
-         }catch(Exception e){
-            e.printStackTrace();
-         }
-         
-      }
+      
       /////////////////////////////////////////////////////////////////////////////////////////////
-      if(this.Savingsdb.exists()){
          try{
             System.out.println("적금파일이 이미 있어서 파일을 불러옵니다");
             FileInputStream sin = new FileInputStream(Savingsdb);
@@ -66,23 +65,21 @@ public class DBManager {
             sdatain.close();
          }catch(Exception e){
             e.printStackTrace();
+            System.out.println("적금파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
+            
+            Savings defalt_saving = new Savings("신나라사랑적금","신한은행","12개월","100000","단리","4.4","5.4","가산금리 최고 연 1.0% 금여이체 실적 보유시 0.7%");
+            Map<String,Savings> defalt_smap = new HashMap<String,Savings>();
+            defalt_smap.put("신나라사랑적금", defalt_saving);
+            try{
+            	FileOutputStream sdbout = new FileOutputStream(Savingsdb);
+            	BufferedOutputStream sdbbufferout = new BufferedOutputStream(sdbout);
+            	ObjectOutputStream sdbdataout = new ObjectOutputStream(sdbbufferout);
+            	sdbdataout.writeObject(defalt_smap);
+            	sdbdataout.close();
+            }catch(Exception err){
+            	err.printStackTrace();
+            }
          }
-      }else{
-         System.out.println("적금파일이 없어 티폴트 값을 넣은 파일을 생성합니다");
-         
-         Savings defalt_saving = new Savings("신나라사랑적금","신한은행","12개월","100000","단리","4.4","5.4","가산금리 최고 연 1.0% 금여이체 실적 보유시 0.7%");
-         Map<String,Savings> defalt_smap = new HashMap<String,Savings>();
-         defalt_smap.put("신나라사랑적금", defalt_saving);
-         try{
-            FileOutputStream sdbout = new FileOutputStream(Savingsdb);
-            BufferedOutputStream sdbbufferout = new BufferedOutputStream(sdbout);
-            ObjectOutputStream sdbdataout = new ObjectOutputStream(sdbbufferout);
-            sdbdataout.writeObject(defalt_smap);
-            sdbdataout.close();
-         }catch(Exception e){
-            e.printStackTrace();
-         }
-      }
       /////////////////////////////////////////////////////////////////////////////////////////////
       
       

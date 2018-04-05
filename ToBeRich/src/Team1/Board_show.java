@@ -103,9 +103,10 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
       
       this.setTitle("게시판 내용 확인");
       this.setSize(1000, 600);
+      this.setLocation(100, 100);
       //this.setLocation(100, 100);
       //위치를 운영체제가 결정하도록 한다
-      this.setLocationByPlatform(true);
+      this.setLocationByPlatform(false);
       this.setResizable(false);
       this.setVisible(true);
    }
@@ -235,6 +236,9 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 //    		  String commnet_str = TF_Comment.getText();
     		  err.printStackTrace();
     	  }
+    	  Board_show reShow = new Board_show(number, userid);
+          this.dispose();
+    	  
       });
       
    }
