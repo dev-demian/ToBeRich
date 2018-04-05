@@ -86,9 +86,14 @@ class Main_Form extends JFrame {
       mainPanel.add(title);
 //      BoardControl BC불러서 Object[][] 받아오고  data
 //      Object[][] data = BC.calltable();
-     
-      BoardControl BC = new BoardControl();
-      Object[][] data = BC.calltable();
+      Object[][] data = null;
+      try{
+    	 BoardControl BC = new BoardControl();
+    	  data = BC.calltable();
+    	 
+     }catch(Exception err){
+    	 err.printStackTrace();
+     }
       
       String[] header =  new String[] {
         		"\uBC88\uD638", "\uC81C\uBAA9", "\uC791\uC131\uC790", "\uB0A0\uC790", "\uC870\uD68C\uC218"

@@ -1,6 +1,7 @@
 package Team1;
 
-import java.awt.image.BufferedImage;
+
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ public class Pakage implements Serializable{//구분자 string(무조건 user,savings,
 	private Map<String,User> user_map;
 	private Map<String,Savings> savings_map;
 	private Map<Integer,List<Object>> board_map;
-	private BufferedImage img;
+	private File img;
 	
 	
 		
@@ -23,7 +24,7 @@ public class Pakage implements Serializable{//구분자 string(무조건 user,savings,
 		}else if(type.equals("board")){
 			this.setBoard_map((Map<Integer,List<Object>>)map_or_img);
 		}else{//이미지
-			this.setImg((BufferedImage)map_or_img);
+			this.setImg((File)map_or_img);
 		}
 		
 		
@@ -68,13 +69,13 @@ public class Pakage implements Serializable{//구분자 string(무조건 user,savings,
 
 
 
-	public BufferedImage getImg() {
+	public File getImg() {
 		return img;
 	}
 
 
 
-	public void setImg(BufferedImage img) {
+	public void setImg(File img) {
 		this.img = img;
 	}
 

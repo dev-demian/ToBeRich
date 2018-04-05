@@ -110,25 +110,22 @@ class Board_Edit extends JDialog {
 
       // DS 확인을 클릭 했을 때 텍스트필드,에어리어에 있는 내용의 값을 가지고 BoardControl 클래스에 setAll 매소드로 보낸다
       btnNewButton.addActionListener(e -> {
-         BoardControl bc = new BoardControl();
-         bc.allSet(textField.getText(), textField_1.getText(),file, textArea.getText(),userid);
-         // DS DB에서 데이터를 불러 map에 갱신
-         try {
-            bc.mapInput();
-         } catch (Exception e1) {
-            System.out.println("BoardConrol에 데이터 전송 중 오류");
+         
+    	  try{
+        	 BoardControl bc = new BoardControl();
+        	 bc.allSet(textField.getText(), textField_1.getText(),file, textArea.getText(),userid);
+        	 
+         }catch(Exception err){
+        	 err.printStackTrace();
          }
-         // DS 갱신 된 map을 DB에 갱신
-         try {
-            bc.mapOutput();
-         } catch (Exception e1) {
-            System.out.println("BoardConrol에 데이터 전송 중 오류");
-         }
-         // DS 확인을 클릭하면 해당 폼이 닫힘
          dispose();
       });
 
       btnNewButton_1.addActionListener(e -> {
+    	  //해당 파일 삭제하기 
+    	  file.delete();
+    	  
+    	  
          dispose();
       });
    }

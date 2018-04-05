@@ -75,7 +75,7 @@ class Board_main extends JFrame{
 	  }
 	  
 	  //DS 생성자를 통해 게시물 확일 폼이 뜰 때마다 조회수가 1씩 증가하는 메소드 호출
-	  BoardControl bc = new BoardControl();
+//	  BoardControl bc = new BoardControl();
 //	  bc.viewAdd(map,number);
 	  
 	  //DS 생성자에서 list의 2인덱스 데이터를 받아 이미지 경로를 저장하고 
@@ -216,9 +216,14 @@ class Board_main extends JFrame{
     	  //DS DB에 저장 되어 있는 비번과 입력 받은 비번이 일치하면 수정 완료 메시지창 띄우고 해당 폼 닫기
     	  if(list.get(1).equals(pw)) {
     		  //DS BoardControl 객체 생성
-    		  BoardControl bc = new BoardControl();
-    		  //DS BoardControl 내의 updateSet(수정기능) 메소드를 호출하며 field와 area에 입력한 데이터를 전달한다
-    		  bc.updateSet(number,textField.getText(),textArea_1.getText());
+    		  try{
+    			  BoardControl bc = new BoardControl();
+    			  //DS BoardControl 내의 updateSet(수정기능) 메소드를 호출하며 field와 area에 입력한 데이터를 전달한다
+    			  bc.updateSet(number,textField.getText(),textArea_1.getText());
+    			  
+    		  }catch(Exception err){
+    			  err.printStackTrace();
+    		  }
     		  //DS 완료 확인창을 띄운다
     		  JOptionPane.showMessageDialog(null,"게시물 수정 완료");
     		  //DS 해당 폼을 종료한다
@@ -239,9 +244,14 @@ class Board_main extends JFrame{
     	  //DS DB에 저장 되어 있는 비번과 입력 받은 비번이 일치하면 수정 완료 메시지창 띄우고 해당 폼 닫기
     	  if(list.get(1).equals(pw)) {
     		//DS BoardControl 객체 생성
-    		BoardControl bc = new BoardControl();
-    		//DS BoardControl 내의 delete(게시물 삭제 기능) 메소드 호출이며 전달 데이터로는 최신 갱신 map,게시물 번호,해당 이미지 경로가 있다
-    		bc.delete(number,imgPath);
+    		  try{
+    			  
+    			  BoardControl bc = new BoardControl();
+    			  //DS BoardControl 내의 delete(게시물 삭제 기능) 메소드 호출이며 전달 데이터로는 최신 갱신 map,게시물 번호,해당 이미지 경로가 있다
+    			  bc.delete(number,imgPath);
+    		  }catch(Exception err){
+    			  err.printStackTrace();
+    		  }
     		//DS 완료 확인창을 띄운다
     		JOptionPane.showMessageDialog(null,"게시물 삭제 완료");
   		  	//DS 해당 폼을 종료한다
