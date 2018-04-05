@@ -1,17 +1,21 @@
 package Team1;
 
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
+
 public class Pakage implements Serializable{//구분자 string(무조건 user,savings,board,images중 1) / Object map or img
+	
 	private String type;
 	private Map<String,User> user_map;
 	private Map<String,Savings> savings_map;
 	private Map<Integer,List<Object>> board_map;
-	private File img;
+	private ImageIcon img;
 	
 	
 		
@@ -23,8 +27,8 @@ public class Pakage implements Serializable{//구분자 string(무조건 user,savings,
 			this.setSavings_map((Map<String,Savings>)map_or_img);
 		}else if(type.equals("board")){
 			this.setBoard_map((Map<Integer,List<Object>>)map_or_img);
-		}else{//이미지
-			this.setImg((File)map_or_img);
+		}else{//이미지 이때 스트링은 파일패스이다 
+			this.setImg((ImageIcon)map_or_img);
 		}
 		
 		
@@ -69,13 +73,13 @@ public class Pakage implements Serializable{//구분자 string(무조건 user,savings,
 
 
 
-	public File getImg() {
+	public ImageIcon getImg() {
 		return img;
 	}
 
 
 
-	public void setImg(File img) {
+	public void setImg(ImageIcon img) {
 		this.img = img;
 	}
 
