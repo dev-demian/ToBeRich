@@ -45,6 +45,8 @@ public class Simulation_Result extends JFrame {
    JLabel L_date = new JLabel("\uB0A0\uC9DC");
    
    
+   BufferedImage send_img;//매개변수로 보낼 이미지
+   int random ; //파일명으로 줄 랜덤값
    String userid;
    File file;//스샷
    String[] resultstr;
@@ -166,28 +168,25 @@ public class Simulation_Result extends JFrame {
     	 
     	 try {
              //파일명 렌던으로
-             int random = (int)(Math.random()*99999);
+             random = (int)(Math.random()*99999);
              Robot r = new Robot();
              Rectangle rect = new Rectangle(this.getX(), this.getY(), 480, 320);// 좌표가 창의위치를 따라간다.
              BufferedImage img = r.createScreenCapture(rect);
              file = new File("images", "save"+"_"+random+".png");
-             ImageIO.write(img, "png", file);   
+             ImageIO.write(img, "png", file);  //이때 저장이 됨 
              
-             Pakage data = new Pakage("img",file);
-             try{
-            	 FileClient FC = new FileClient("127.0.0.1",8888);
-            	 FC.save_request(data);
-            	 
-             }catch(Exception err3){
-            	 err3.printStackTrace();
-             }
+             
+             System.out.println(file.getAbsolutePath()+"의패스로 서버에도 저장하러 ㄱㄱ");
+             send_img = ImageIO.read(file);
+             
+
              
              
           } catch (Exception err2) {
              err2.printStackTrace();
           }
     	  
-         Board_Edit BE = new Board_Edit(file,userid);
+         Board_Edit BE = new Board_Edit(file,userid,send_img,Integer.toString(random));
       });
       btnNewButton_1.addActionListener(e->{
     	  dispose();

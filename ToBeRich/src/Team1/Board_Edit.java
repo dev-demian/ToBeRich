@@ -1,8 +1,10 @@
 package Team1;
 
 import java.awt.Font;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -33,12 +35,16 @@ class Board_Edit extends JDialog {
    private File file;
    String userid;
    
+   BufferedImage send_img;//매개변수로 보낼 이미지
+   String img_name ; //파일명으로 줄 랜덤값
    
    
    // main에 하던 설정들을 생성자에서 진행
-   public Board_Edit(File file,String userid) {
+   public Board_Edit(File file,String userid,BufferedImage send_img,String img_name) {
 	  this.userid=userid;
       this.file = file;
+      this.send_img  = send_img;
+      this.img_name = img_name;
       this.display();// 화면 구성 관련 처리
       this.event();// 이벤트 관련 처리
       this.menu();// 메뉴 관련 처리
@@ -114,6 +120,17 @@ class Board_Edit extends JDialog {
     	  try{
         	 BoardControl bc = new BoardControl();
         	 bc.allSet(textField.getText(), textField_1.getText(),file, textArea.getText(),userid);
+        	 
+        	 
+        	 ImageIcon imageIcon = new ImageIcon(send_img);//서버로 보내기위한 변환
+        	 Pakage data = new Pakage(img_name,imageIcon);  //이름   버퍼드 이미지 
+           try{
+          	 FileClient FC = new FileClient("127.0.0.1",8888);
+          	 FC.save_request(data);
+          	 
+           }catch(Exception err3){
+          	 err3.printStackTrace();
+           }
         	 
          }catch(Exception err){
         	 err.printStackTrace();
