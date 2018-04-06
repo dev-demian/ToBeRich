@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -70,6 +71,7 @@ public class FileClient extends JFrame
     
     
   }
+	Object result;
 
 // initialize chatServer and set up GUI
     public FileClient( String host, int port) throws UnknownHostException, IOException{// host , port ,구분자, 파일 
@@ -162,10 +164,9 @@ public class FileClient extends JFrame
     	}else if(type.equals("savings")){
     		reuest_targetName ="savings";
     	}else{//이미지
-    		reuest_targetName ="images";
+    		reuest_targetName =type;
     	}
     	//보내고 받기 
-    	 Object result;
     	 try{
     		 
     		 ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
@@ -184,7 +185,7 @@ public class FileClient extends JFrame
     		 }else if(type.equals("savings")){
     			 result = (Map<String,Savings>)temp_obj;
     		 }else{//이미지
-    			 result = (BufferedImage)temp_obj;
+    			 result = (ImageIcon)temp_obj;
     		 }
     		 System.out.println("소켓 종료합니다.");
     		 socket.close();

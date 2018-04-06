@@ -62,11 +62,10 @@ class Board_main extends JFrame{
 	  this.number = number;
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
 	  try{
-		  //DS DB에서 읽어오는 스트림 생성
-		  ObjectInputStream mapInput = new ObjectInputStream(
-		  new BufferedInputStream(new FileInputStream(target)));
+		  FileClient FC = new FileClient("127.0.0.1",8888);
+		    
 		  //DS DB에서 전체 map 정보를 불러와 현재 map에 갱신
-		  map = (Map<Integer,List<Object>>)mapInput.readObject();
+		  map = (Map<Integer,List<Object>>)FC.call_request("board");
 		  //DS 현재 map에서 number(게시물 번호)에 해당하는 key값의 value만을 현재 list에 저장
 		  list = map.get(number);
 		  //System.out.println(list.get(1)); //DS DB에서 가져온 해당 게시물 내용을 확인할 수 있다

@@ -2,6 +2,7 @@ package Team1;
 
 
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -28,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.image.BufferedImage;
 
 class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감 
    //DS 선언식으로 모아 둔 변수 생성 위치들 변경함
@@ -58,7 +60,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    private final JTextField TF_Comment = new JTextField();
    private final JButton add_commnet_btn = new JButton("\uB4F1\uB85D");
    private String printed_comment ;
-   
+   private BufferedImage bf_img;
    
    //main에 하던 설정들을 생성자에서 진행
    public Board_show(int number,String userid) {
@@ -68,13 +70,20 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
 	  try{
 		  //DS DB에서 읽어오는 스트림 생성
-		  ObjectInputStream mapInput = new ObjectInputStream(
-		  new BufferedInputStream(new FileInputStream(target)));
+//		  ObjectInputStream mapInput = new ObjectInputStream(
+//		  new BufferedInputStream(new FileInputStream(target)));
+		  
+		  FileClient FC = new FileClient("127.0.0.1",8888);
+		    
 		  //DS DB에서 전체 map 정보를 불러와 현재 map에 갱신
-		  map = (Map<Integer,List<Object>>)mapInput.readObject();
+		  map = (Map<Integer,List<Object>>)FC.call_request("board");
 		  //DS 현재 map에서 number(게시물 번호)에 해당하는 key값의 value만을 현재 list에 저장
 		  list = map.get(number);
 		  //System.out.println(list.get(1)); //DS DB에서 가져온 해당 게시물 내용을 확인할 수 있다
+		  
+		  //서버와 연동하기 위한 이미지 가져오기 
+		  
+		  
 	  }catch(Exception e) {
 		  System.out.println("DB에서 데이터를 가져올 때 오류");
 	  }
@@ -90,14 +99,30 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 	  
 	  //DS 생성자에서 list의 2인덱스 데이터를 받아 이미지 경로를 저장하고 
 	  //이미지 경로를 Image타입으로 변환해 저장한다
+	  
+	  	
+	  	
+	  	
 	  try {
 	    	imgPath = (File)list.get(2);
-			img = ImageIO.read(imgPath);
-		} catch (IOException e) {
+	    	FileClient FC = new FileClient("127.0.0.1",8888);
+	    	ImageIcon icon =(ImageIcon)FC.call_request(imgPath.getName());
+	    	Image icon_img = icon.getImage();
+	    	
+			 bf_img = new BufferedImage(icon_img.getWidth(null), icon_img.getHeight(null),
+				        BufferedImage.TYPE_INT_RGB);
+
+				    Graphics g = bf_img.createGraphics();
+				    g.drawImage(icon_img, 0, 0, null);
+				    g.dispose();
+	    	
+	    	
+	    	img = ImageIO.read(imgPath);
+	  } catch (IOException e) {
 			System.out.println("이미지 파일이 없습니다.");
 		}
 	  //DS Image타입의 변수를 ImageIcon으로 변환 후 상위 클래스 타입인 JLabel에 삽입한다
-	  imgLabel = new JLabel(new ImageIcon(img));
+	  imgLabel = new JLabel(new ImageIcon(bf_img));
 	  
 	   
 	  
@@ -251,8 +276,6 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
    private void menu() {
       
    }
-
-
 
 //   public static void main(String[] args) {
 //      /*
