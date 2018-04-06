@@ -125,7 +125,7 @@ class Board_Edit extends JDialog {
         	 ImageIcon imageIcon = new ImageIcon(send_img);//서버로 보내기위한 변환
         	 Pakage data = new Pakage(img_name,imageIcon);  //이름   버퍼드 이미지 
            try{
-          	 FileClient FC = new FileClient("127.0.0.1",8888);
+          	 FileClient FC = new FileClient();
           	 FC.save_request(data);
           	 
            }catch(Exception err3){

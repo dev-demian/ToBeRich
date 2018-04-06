@@ -73,7 +73,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 //		  ObjectInputStream mapInput = new ObjectInputStream(
 //		  new BufferedInputStream(new FileInputStream(target)));
 		  
-		  FileClient FC = new FileClient("127.0.0.1",8888);
+		  FileClient FC = new FileClient();
 		    
 		  //DS DB에서 전체 map 정보를 불러와 현재 map에 갱신
 		  map = (Map<Integer,List<Object>>)FC.call_request("board");
@@ -105,7 +105,7 @@ class Board_show extends JFrame{//단순 확인창 button클릭시 수정 삭제로 넘어감
 	  	
 	  try {
 	    	imgPath = (File)list.get(2);
-	    	FileClient FC = new FileClient("127.0.0.1",8888);
+	    	FileClient FC = new FileClient();
 	    	ImageIcon icon =(ImageIcon)FC.call_request(imgPath.getName());
 	    	Image icon_img = icon.getImage();
 	    	

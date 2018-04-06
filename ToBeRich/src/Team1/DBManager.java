@@ -29,7 +29,7 @@ public class DBManager {
       /////////////////////////////////////////////////////////////////////////////////////////////
      
          try{
-        	 FileClient app_u = new FileClient("127.0.0.1",8888);
+        	 FileClient app_u = new FileClient();
         	 userinfo = (Map<String,User>)app_u.call_request("user");
         	 try{
         	    	FileOutputStream out = new FileOutputStream(Userdb);
@@ -51,7 +51,7 @@ public class DBManager {
       
       /////////////////////////////////////////////////////////////////////////////////////////////
          try{
-        	 FileClient app_s = new FileClient("127.0.0.1",8888);
+        	 FileClient app_s = new FileClient();
         	 savingsinfo = (Map<String,Savings>)app_s.call_request("savings");
         	 try{
         	    	FileOutputStream out = new FileOutputStream(Savingsdb);
@@ -116,7 +116,7 @@ public class DBManager {
            	e.printStackTrace();
            }
          Pakage data = new Pakage("user",userinfo);
-         FileClient app_u = new FileClient("127.0.0.1",8888);
+         FileClient app_u = new FileClient();
          app_u.save_request(data); 
           
       }else{
@@ -201,7 +201,7 @@ public class DBManager {
         	e.printStackTrace();
         }
          Pakage data = new Pakage("savings",savingsinfo);
-         FileClient app_s = new FileClient("127.0.0.1",8888);
+         FileClient app_s = new FileClient();
          app_s.save_request(data); 
       }else{
          System.out.print("이미 일치하는적금명이 있습니다!!");

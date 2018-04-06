@@ -2,16 +2,20 @@ package Team1;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +34,11 @@ import javax.swing.SwingUtilities;
 public class FileClient extends JFrame 
 {
 	static Map<String,User> userinfo ;
-	private int port ;
+	private int port  ;
 	private String host ;
 	private Socket socket ;
 	private Pakage data;
-   
+	private File ip_add=new File("property","ip_add.txt");
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {
 //    
@@ -72,11 +76,39 @@ public class FileClient extends JFrame
     
   }
 	Object result;
+	String default_ip ="127.0.0.1";
 
 // initialize chatServer and set up GUI
-    public FileClient( String host, int port) throws UnknownHostException, IOException{// host , port ,구분자, 파일 
-    	this.port = port;
-    	this.host = host;
+    public FileClient( ) throws UnknownHostException, IOException{// host , port ,구분자, 파일 
+    	this.port = 8888;
+    	
+    	try{
+    			
+    		FileInputStream fis = new FileInputStream(ip_add); 
+    		BufferedReader bufferReader = new BufferedReader(new InputStreamReader(fis));
+
+    		while( (host = bufferReader.readLine()) != null ){
+    			// str에 txt파일의 한 라인을 읽어온다
+    			host += host; 
+    		}
+
+
+
+
+
+        	
+        }catch(Exception e){
+        	e.printStackTrace();
+        	System.out.println("ip 가져오기 실패 파일이 없습니다");
+        	
+        	FileOutputStream fout = new FileOutputStream(ip_add);
+        	byte[] contentInBytes = default_ip.getBytes();
+        	fout.write(contentInBytes);
+        	fout.flush();
+        	fout.close();
+        	System.out.println("Done");
+        }
+    	
     	this.socket = new Socket(host, port);
     	
     	//전송 메소드 

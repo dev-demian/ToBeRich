@@ -25,7 +25,7 @@ public class BoardControl {
 	// TODO Auto-generated constructor stub
 	  System.out.println("기본 생성자 호출 최신 게시판 정보를 가져옵니다 ");
 	  
-	  FileClient app_b = new FileClient("127.0.0.1",8888);
+	  FileClient app_b = new FileClient();
 	  this.map = (Map<Integer,List<Object>>)app_b.call_request("board");
 	  try{
 	    	FileOutputStream out = new FileOutputStream(target);
@@ -191,7 +191,7 @@ public class BoardControl {
          out.flush();
          
          Pakage data = new Pakage("board",map);
-         FileClient app_b = new FileClient("127.0.0.1",8888);
+         FileClient app_b = new FileClient();
          app_b.save_request(data);
          
       }catch(Exception e) {

@@ -62,7 +62,7 @@ class Board_main extends JFrame{
 	  this.number = number;
 	  //DS DB에서 전체 map데이터를 불러와서 number에 해당하는 map데이터만을 list에 갱신한다
 	  try{
-		  FileClient FC = new FileClient("127.0.0.1",8888);
+		  FileClient FC = new FileClient();
 		    
 		  //DS DB에서 전체 map 정보를 불러와 현재 map에 갱신
 		  map = (Map<Integer,List<Object>>)FC.call_request("board");
